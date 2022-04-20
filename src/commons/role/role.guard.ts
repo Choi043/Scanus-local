@@ -14,12 +14,12 @@ export class RoleGuard implements CanActivate {
             return true;
         }
 
-        const request = context.switchToHttp().getRequest();
-        const user = request.user as AdminEntity;
-        const role: AdminRoleType = user.role;
-        if (!(user && user.role && roles.includes(role))) {
-            throw new BadRequestException('접근 권한이 존재하지 않습니다.');
-        }
+        // const request = context.switchToHttp().getRequest();
+        // const user = request.user as AdminEntity;
+        // const role: AdminRoleType = user.role;
+        // if (!(user && user.role && roles.includes(role))) {
+        //     throw new BadRequestException('접근 권한이 존재하지 않습니다.');
+        // }
         return true;
     }
 }
