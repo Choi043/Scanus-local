@@ -1,10 +1,11 @@
 import { IsNotEmpty, IsString } from "class-validator";
+import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { AdminRoleType } from "./admin.role";
 
 @Entity('tb_admin')
 @Unique(['mn_email'])
-export class AdminEntity {
+export class AdminEntity extends DateIdxEntity{
     @PrimaryGeneratedColumn()
     admin_idx: number;
 
