@@ -26,6 +26,8 @@ export class AdminInfoService {
         return adminFind;
     }
 
+    // 위치 지정을 잘 해야 함
+
     async findById(admin_id: string): Promise<AdminEntity> {
         const adminFind = await this.adminRepository.findOne({
             where: { admin_id },
@@ -36,12 +38,6 @@ export class AdminInfoService {
         }
 
         return adminFind;
-    }
-
-    async tokenValidate(payload: JwtPayload): Promise<AdminInfoDto | undefined> {
-        return await this.findByFields(
-            {where: {userId: payload.userId}
-        });
     }
 
     async findByFields(options: FindOneOptions<AdminInfoDto>): Promise<AdminInfoDto | undefined> {
