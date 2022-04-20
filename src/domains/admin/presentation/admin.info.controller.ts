@@ -9,22 +9,22 @@ import { AdminRoleType } from "../domain/admin.role";
 
 @Controller('admin')
 export class AdminInfoController {
-    constructor(private readonly adminInfoService: AdminInfoService) {}
-    
+    constructor(private readonly adminInfoService: AdminInfoService) { }
+
     @Get('/info')
     @UseGuards(JwtAuthGuard)
     async getInfo(@CurrentUser() user: AdminEntity) {
         const { admin_idx } = user;
         return this.adminInfoService.getAdminInfo(admin_idx);
     }
-    
-        @Get('/info/:index')
-        @UseGuards(JwtAuthGuard, RoleGuard)
-        @Roles(AdminRoleType.MASTER)
-        async getAdminInfo(@Param('index') index: number) {
-            console.log('controller index: ', index);
-            return this.adminInfoService.getAdminInfo(index);
-        }
-    
-    
+
+    @Get('/info/:index')
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles(AdminRoleType.MASTER)
+    async getAdminInfo(@Param('index') index: number) {
+        console.log('controller index: ', index);
+        return this.adminInfoService.getAdminInfo(index);
+    }
+
+
 }
