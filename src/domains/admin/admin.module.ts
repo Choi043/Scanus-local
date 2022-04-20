@@ -2,8 +2,10 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { AdminSignInService } from "./application/admin.sign-in.service";
 import { AdminSignUpService } from "./application/admin.sign-up.service";
 import { AdminRepository } from "./domain/admin.repository";
+import { AdminSignInController } from "./presentation/admin.sign-in.controller";
 import { AdminSignUpController } from "./presentation/admin.sign-up.controller";
 
 @Module({
@@ -20,10 +22,12 @@ import { AdminSignUpController } from "./presentation/admin.sign-up.controller";
         PassportModule,
     ],
     controllers: [
-        AdminSignUpController
+        AdminSignUpController,
+        AdminSignInController,
     ],
     providers: [
-        AdminSignUpService
+        AdminSignUpService,
+        AdminSignInService,
     ],
 })
 export class AdminModule {}
