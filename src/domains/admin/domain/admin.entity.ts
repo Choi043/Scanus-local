@@ -1,33 +1,42 @@
 import { IsNotEmpty, IsString } from "class-validator";
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { AdminRoleType } from "./admin.role";
 
 @Entity('tb_admin')
-@Unique(['email'])
+@Unique(['mn_email'])
 export class AdminEntity {
     @PrimaryGeneratedColumn()
-    id: number;
+    admin_idx: number;
 
-    @Column('varchar', { comment: '유저 아이디' })
+    @Column('varchar', { comment: '아이디' })
     @IsString()
     @IsNotEmpty()
-    userId: string;
+    admin_id: string;
 
-    @Column('varchar', { comment: '유저 비밀번호' })
+    @Column('varchar', { comment: '비밀번호' })
     @IsString()
     @IsNotEmpty()
-    password: string;
+    admin_pw: string;
 
-    @Column('varchar', { comment: '담당자' })
+    @Column('varchar', { comment: '담당자명' })
     @IsString()
-    manager: string;
+    mn_nm: string;
 
-    @Column('varchar', { comment: '유저 전화번호' })
-    @IsString()
-    @IsNotEmpty()
-    phone: string;
-
-    @Column('varchar', { comment: '유저 이메일' })
+    @Column('varchar', { comment: '전화번호' })
     @IsString()
     @IsNotEmpty()
-    email: string;
+    mn_tel: string;
+
+    @Column('varchar', { comment: '이메일' })
+    @IsString()
+    @IsNotEmpty()
+    mn_email: string;
+
+    @Column('enum', { 
+        enum: AdminRoleType, 
+        comment: '_관리자 타입' 
+    })
+    @IsString()
+    @IsNotEmpty()
+    admin_type: AdminRoleType;
 }

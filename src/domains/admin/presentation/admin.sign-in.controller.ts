@@ -6,7 +6,7 @@ import { AdminSignInDto } from "../application/dto/admin.sign-in";
 export class AdminSignInController {
     constructor(private readonly adminSignInService: AdminSignInService) {}
 
-    @Post('sign-in')
+    @Post('/sign-in')
     async signIn(@Body() adminSignInDto: AdminSignInDto): Promise<{ accessToken: string }> {
         return this.adminSignInService.signIn(adminSignInDto);
     }

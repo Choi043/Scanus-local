@@ -7,17 +7,18 @@ import * as bcrypt from 'bcryptjs';
 export class AdminRepository extends Repository<AdminEntity> {
 
     async createAdmin(adminSignUpDto: AdminSignUpDto): Promise<AdminEntity> {
-        const { userId, password, manager, phone, email } = adminSignUpDto
+        const { admin_id, admin_pw, mn_nm, mn_tel, mn_email, admin_type } = adminSignUpDto
 
-        const salt = await bcrypt.genSalt({})
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const salt = await bcrypt.genSalt()
+        const hashedPassword = await bcrypt.hash(admin_pw, salt);
 
         const adminAccount: AdminEntity = this.create({
-            userId,
-            password: hashedPassword,
-            manager,
-            phone,
-            email
+            admin_id,
+            admin_pw: hashedPassword,
+            mn_nm,
+            mn_tel,
+            mn_email,
+            admin_type
         });
 
         return await this.save(adminAccount);

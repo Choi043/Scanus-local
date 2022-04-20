@@ -1,23 +1,28 @@
 import { IsNotEmpty, IsString } from "class-validator";
+import { AdminRoleType } from "../../domain/admin.role";
 
 export class AdminSignUpDto {
     @IsString()
     @IsNotEmpty({ message: '아이디를 입력해주세요.'})
-    userId: string;
+    admin_id: string;
     
     @IsString()
     @IsNotEmpty({ message: '비밀번호를 입력해주세요.'})
-    password: string;
+    admin_pw: string;
     
     @IsString()
     @IsNotEmpty({ message: '담당자를 입력해주세요.'})
-    manager: string;
+    mn_nm: string;
     
     @IsString()
     @IsNotEmpty({ message: '전화번호를 입력해주세요.'})
-    phone: string;
+    mn_tel: string;
     
     @IsString()
     @IsNotEmpty({ message: '이메일을 입력해주세요.'})
-    email: string;
+    mn_email: string;
+
+    @IsString()
+    @IsNotEmpty({ message: '관리자 타입을 입력해주세요.'})
+    admin_type: AdminRoleType;
 }

@@ -15,20 +15,20 @@ export class AdminSignInService {
     ) { }
 
     async signIn(adminSignInDto: AdminSignInDto): Promise<{ accessToken: string } | undefined> {
-        const { userId, password } = adminSignInDto;
+        const { admin_id, admin_pw } = adminSignInDto;
         const adminFind: AdminSignInDto = await this.adminRepository.findOne({
-            where: {userId}
+            where: {admin_id}
         });
         if(!adminFind) {
             throw new UnauthorizedException("등록되지 않은 계정입니다.");
         }
         const payload: JwtPayload = {
-            userId: adminFind.userId,
-            role: adminFind.role
+            userId: adminFind.admin_id,
+            role: adminFind.admin_type
         };
         const accessToken = this.jwtService.sign(payload);
 
-        const hashPassword = await bcrypt.compare(password, adminFind.password)
+        const hashPassword = await bcrypt.compare(admin_pw, adminFind.admin_pw)
         if(!hashPassword) {
             throw new BadRequestException("비밀번호가 일치하지 않습니다.");
         }

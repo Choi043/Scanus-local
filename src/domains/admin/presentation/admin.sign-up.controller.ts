@@ -6,7 +6,7 @@ import { AdminSignUpDto } from "../application/dto/admin.sign-up";
 export class AdminSignUpController {
     constructor(private readonly adminSignUpService: AdminSignUpService) {}
 
-    @Post('register')
+    @Post('/register')
     async registerAdmin(@Body() adminSignUpDto: AdminSignUpDto): Promise<any> {
         return await this.adminSignUpService.signUp(adminSignUpDto);
     }
