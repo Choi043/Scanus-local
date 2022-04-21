@@ -23,6 +23,4 @@ export class CompanyEditController {
     ):Promise<CompanyEntity> {
         return this.companyEditService.edit(id, companyEditDto);
     }
-
-
 }

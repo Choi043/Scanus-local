@@ -1,6 +1,6 @@
 import { IsNotEmpty } from "class-validator";
 import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Leave_fl } from "./company.leave";
 
 @Entity('tb_company')
@@ -24,4 +24,5 @@ export class CompanyEntity extends DateIdxEntity {
         comment: '탈퇴 여부'
     })
     leave_fl: Leave_fl
+
 }
