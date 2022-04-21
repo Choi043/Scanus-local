@@ -9,15 +9,15 @@ export class CompanyInfoService {
         private readonly companyRepository: CompanyRepository
     ) { }
 
-    async getCompanyInfo(admin_idx: number) {
-        const adminFind = await this.companyRepository.findOne({
-            where: { admin_idx },
+    async getCompanyInfo(cmpny_idx: number) {
+        const companyFind = await this.companyRepository.findOne({
+            where: { cmpny_idx },
         })
 
-        if (!adminFind) {
+        if (!companyFind) {
             throw new BadRequestException('데이터가 존재하지 않습니다.');
         }
 
-        return adminFind;
+        return companyFind;
     }
 }

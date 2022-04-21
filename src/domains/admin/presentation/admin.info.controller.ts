@@ -26,5 +26,9 @@ export class AdminInfoController {
         return this.adminInfoService.getAdminInfo(index);
     }
 
+    @Get('/test/:id')
+    findId(@Param('id') id: number) {
+        return `This action return a ${id}`;
+    }
 
 }
