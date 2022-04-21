@@ -17,7 +17,7 @@ import { AdminSignUpController } from "./presentation/admin.sign-up.controller";
         PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.register({
             secret: 'SECRET_KEY',
-            signOptions: {expiresIn: 3600}
+            signOptions: {expiresIn: 3600*24}
         }),
     ],
     exports: [
