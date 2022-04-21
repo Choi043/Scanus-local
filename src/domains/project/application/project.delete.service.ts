@@ -10,7 +10,7 @@ export class ProjectDeleteService {
     ) {}
 
     async deleteProject(project_idx: number) {
-        
+        return await this.projectRepository.delete(project_idx)
     }
 
 }

@@ -1,3 +1,4 @@
+import { ConflictException } from "@nestjs/common";
 import { EntityRepository, Repository } from "typeorm";
 import { ProjectRegisterDto } from "../application/dto/project.register";
 import { ProjectEntity } from "./project.entity";
@@ -20,5 +21,20 @@ export class ProjectRepository extends Repository<ProjectEntity> {
         })
 
         return await this.save(newCompany);
+    }
+
+    async deleteProject(project_idx: number) {
+        const projectFind = await this.findOne(project_idx)
+
+        if(projectFind) {
+            await this.delete(project_idx);
+
+            return {
+                message: 'success'
+            }
+        }
+        else {
+            new ConflictException()
+        }
     }
 }
