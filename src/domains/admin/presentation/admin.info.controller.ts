@@ -1,9 +1,10 @@
-import { Controller, Get, Param, UseGuards } from "@nestjs/common";
+import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
 import { CurrentUser } from "src/commons/decorator/decorator.current.user";
 import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
 import { Roles } from "src/commons/role/role.decorator";
 import { RoleGuard } from "src/commons/role/role.guard";
 import { AdminInfoService } from "../application/admin.info.service";
+import { AdminInfoDto } from "../application/dto/admin.info";
 import { AdminEntity } from "../domain/admin.entity";
 import { AdminRoleType } from "../domain/admin.role";
 
@@ -22,13 +23,16 @@ export class AdminInfoController {
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Roles(AdminRoleType.MASTER)
     async getAdminInfo(@Param('index') index: number) {
-        console.log('controller index: ', index);
         return this.adminInfoService.getAdminInfo(index);
     }
 
-    @Get('/test/:id')
-    findId(@Param('id') id: number) {
-        return `This action return a ${id}`;
+    @Get('/infolist')
+    @UseGuards(JwtAuthGuard)
+    async getInfoList(
+        @Query('take') take: number,
+        @Query('page') page: number,
+    ) {
+        return this.adminInfoService.list({ take, page });
     }
 
 }

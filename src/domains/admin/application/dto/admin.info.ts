@@ -17,5 +17,6 @@ export class AdminInfoDto {
     @IsString()
     mn_email: string;
 
-    admin_type: AdminRoleType;
+    @IsString()
+    admin_type: string;
 }

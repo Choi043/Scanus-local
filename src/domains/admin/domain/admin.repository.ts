@@ -2,6 +2,9 @@ import { EntityRepository, Repository } from "typeorm";
 import { AdminSignUpDto } from "../application/dto/admin.sign-up";
 import { AdminEntity } from "./admin.entity";
 import * as bcrypt from 'bcryptjs';
+import { AdminInfoDto } from "../application/dto/admin.info";
+import { PaginationOptions } from "src/commons/typeorm/paginate/pagination.option";
+import { Pagination } from "src/commons/typeorm/paginate";
 
 @EntityRepository(AdminEntity)
 export class AdminRepository extends Repository<AdminEntity> {
@@ -22,5 +25,13 @@ export class AdminRepository extends Repository<AdminEntity> {
         });
 
         return await this.save(adminAccount);
+    }
+
+    async findAll(
+        adminList: AdminInfoDto,
+        user: AdminEntity
+    ): Promise<AdminInfoDto[]> {
+
+        return
     }
 }
