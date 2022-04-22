@@ -14,6 +14,6 @@ export class BrandEditController {
         @Param('id') id: number,
         @Body() brandEditDto: BrandEditDto
     ):Promise<BrandEditDto> {
-        return this.brandEditService.edit(id, brandEditDto);
+        return this.brandEditService.editBrand(id, brandEditDto);
     }
 }

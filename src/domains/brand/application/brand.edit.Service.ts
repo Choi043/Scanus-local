@@ -11,7 +11,7 @@ export class BrandEditService {
         private readonly brandRepository: BrandRepository
     ) {}
 
-    async edit(brand_idx: number, editBrand: BrandEditDto): Promise<BrandEntity> {
+    async editBrand(brand_idx: number, editBrand: BrandEditDto): Promise<BrandEntity> {
         const brandFind = await this.brandRepository.findOne(brand_idx);
 
         brandFind.brand_nm = editBrand.brand_nm;
