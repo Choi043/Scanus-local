@@ -6,9 +6,10 @@ import { ProductEntity } from "./product.entity";
 export class ProductRepository extends Repository<ProductEntity> {
 
     async addProduct(productRegisterDto: ProductRegisterDto): Promise<ProductEntity> {
-        const { pro_code, pro_url, pro_img, pro_nm, pro_sumry, pro_info, use_yn } = productRegisterDto
+        const { companyEntity, pro_code, pro_url, pro_img, pro_nm, pro_sumry, pro_info, use_yn } = productRegisterDto
 
         const newProduct: ProductEntity = this.create({
+            companyEntity,
             pro_code, 
             pro_url, 
             pro_img, 
