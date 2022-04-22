@@ -10,7 +10,17 @@ export class ProjectDeleteService {
     ) {}
 
     async deleteProject(project_idx: number) {
-        return await this.projectRepository.delete(project_idx)
+        const findProject = await this.projectRepository.findOne(project_idx)
+
+        if (findProject){
+            await this.projectRepository.delete(project_idx)
+            return {
+                message: "삭제 완료"
+            }
+        } 
+        return {
+            message: "입력한 값이 존재하지 않습니다."
+        }
     }
 
 }

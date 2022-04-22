@@ -9,7 +9,7 @@ export class ProjectRepository extends Repository<ProjectEntity> {
     async addProject(projectRegisterDto: ProjectRegisterDto): Promise<ProjectEntity> {
         const {  prjct_nm, sn_yn, scratch_type, secure_type, unit_yn, surl_yn, blockchain_yn, pro_cnnc_yn } = projectRegisterDto
 
-        const newCompany: ProjectEntity = this.create({
+        const newProject: ProjectEntity = this.create({
             prjct_nm, 
             sn_yn, 
             scratch_type, 
@@ -20,7 +20,7 @@ export class ProjectRepository extends Repository<ProjectEntity> {
             pro_cnnc_yn,
         })
 
-        return await this.save(newCompany);
+        return await this.save(newProject);
     }
 
     async deleteProject(project_idx: number) {
