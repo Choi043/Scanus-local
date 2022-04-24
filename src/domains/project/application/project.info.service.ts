@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { PaginationOptions } from "src/commons/typeorm/paginate/pagination.option";
 import { ProjectRepository } from "../domain/project.repository";
 
 @Injectable()
@@ -20,11 +19,6 @@ export class ProjectInfoService {
         }
         
         return projectFind;
-    }
-
-    async list2(options: PaginationOptions) {
-        const { take, page } = options;
-        return "언젠간 사용하겠습니다."
     }
     
     async infoChannel(condition: string, find: string) {
