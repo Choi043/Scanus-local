@@ -8,7 +8,7 @@ import { AdminRepository } from "src/domains/admin/domain/admin.repository";
 import { JwtPayload } from "./jwt.payload";
 import { AdminFindService } from 'src/domains/admin/application/admin.find.service';
 import * as config from 'config';
-// const jwtConfig = config.get('jwt');
+const jwtConfig = config.get('jwt');
 
 @Injectable()
 export class JwtAccessStrategy extends PassportStrategy(
@@ -16,12 +16,11 @@ export class JwtAccessStrategy extends PassportStrategy(
     'jwt-access'
 ) {
     constructor(
-        @InjectRepository(AdminRepository)
         private readonly adminFindService: AdminFindService,
     ) {
         super({
-            // secretOrKey: jwtConfig.accessSecretKey,
-            secret: 'secretkey',
+            secretOrKey: jwtConfig.accessSecretKey,
+            // secret: 'secretkey',
             // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             jwtFromRequest: ExtractJwt.fromExtractors([jwtAccessExtractor]),
             // ignoreExpiration: false,
@@ -48,9 +47,11 @@ export class JwtRefreshStrategy extends PassportStrategy(
     Strategy,
     'jwt-refresh',
 ) {
-    constructor(private readonly adminFindService: AdminFindService) {
+    constructor(
+        private readonly adminFindService: AdminFindService
+        ) {
         super({
-            secret: 'secretkey',
+            secret: 'secret-refresh-key',
             // secretOrKey: jwtConfig.refreshSecretKey,
             jwtFromRequest: ExtractJwt.fromExtractors([refreshExtractor]),
             // ignoreExpiration: false,

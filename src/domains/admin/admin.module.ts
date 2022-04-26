@@ -17,12 +17,12 @@ import { AdminSignUpController } from "./presentation/admin.sign-up.controller";
 @Module({
     imports: [
         TypeOrmModule.forFeature([AdminRepository]),
-        PassportModule,
+        // PassportModule,
         forwardRef(() => AuthModule),
     ],
     exports: [
         // TypeOrmModule,
-        PassportModule,
+        // PassportModule,
         AdminFindService,
         // JwtService,
     ],
