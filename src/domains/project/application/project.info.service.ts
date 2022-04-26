@@ -26,7 +26,7 @@ export class ProjectInfoService {
         return await this.projectRepository
             .createQueryBuilder('tb_project')
             .select([
-                // 'tb_company.cmpny_nm'
+                // 'tb_company.cmpny_nm',
                 'tb_project.prjct_nm',
                 'tb_project.sn_yn',
                 'tb_project.unit_yn',
