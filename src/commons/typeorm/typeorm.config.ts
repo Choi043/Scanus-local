@@ -1,6 +1,7 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import * as config from 'config';
 import { AdminEntity } from "src/domains/admin/domain/admin.entity";
+import { AdminTokenEntity } from "src/domains/auth/domain/admin.token.entity";
 import { BrandEntity } from "src/domains/brand/domain/brand.entity";
 import { CompanyEntity } from "src/domains/company/domain/company.entity";
 import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
@@ -29,6 +30,7 @@ export const TypeormConfig = {
             BrandEntity,
             ProductEntity,
             CompanyProjectEntity,
+            AdminTokenEntity,
         ],
     })
 }

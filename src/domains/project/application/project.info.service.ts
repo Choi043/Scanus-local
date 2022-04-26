@@ -40,12 +40,13 @@ export class ProjectInfoService {
             .getManyAndCount()
     }
     
+    // 회사명 - 프로젝트명 - 일련번호 ~ 블록체인사용여부 - 등록일
     async infoChannel(condition: string, find: string) {        
         return await this.projectRepository
             .createQueryBuilder('tb_project')
             .select([
                 'tb_company.cmpny_nm',
-                'tb_project.prjct_idx',
+                'tb_company_project.cmpny_idx',
                 'tb_project.prjct_nm',
                 'tb_project.sn_yn',
                 'tb_project.unit_yn',
@@ -56,8 +57,8 @@ export class ProjectInfoService {
                 'tb_project.blockchain_yn',
                 'tb_project.reg_dt',
             ])
-            .leftJoin('tb_project.companyEntity', 'tb_company')
-            .innerJoin('','')
+            .leftJoin('tb_project.prjct_idx', 'tb_company_project')
+            .leftJoin('tb_company_project.cmpny_idx','tb_company')
             .where(`tb_project.${condition} LIKE "${find}%"`)
             .orderBy('tb_project.reg_dt', 'ASC')
             .getManyAndCount()

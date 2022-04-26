@@ -6,21 +6,23 @@ import { ExtractJwt, Strategy, VerifiedCallback } from "passport-jwt";
 import { AdminInfoService } from "src/domains/admin/application/admin.info.service";
 import { AdminRepository } from "src/domains/admin/domain/admin.repository";
 import { JwtPayload } from "./jwt.payload";
+import { AdminFindService } from 'src/domains/admin/application/admin.find.service';
+import * as config from 'config';
+const jwtConfig = config.get('jwt');
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(
+export class JwtAccessStrategy extends PassportStrategy(
     Strategy,
-    'jwt'
+    'jwt-access'
 ) {
     constructor(
         @InjectRepository(AdminRepository)
-        private readonly adminRepository: AdminRepository,
-        private readonly adminInfoService: AdminInfoService,
+        private readonly adminFindService: AdminFindService,
     ) {
         super({
-            secretOrKey: 'SECRET_KEY',
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            // jwtFromRequest: ExtractJwt.fromExtractors([jwtAccessExtractor]),
+            secretOrKey: jwtConfig.accessSecretKey,
+            // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: ExtractJwt.fromExtractors([jwtAccessExtractor]),
             // ignoreExpiration: false,
             // passReqToCallback: true,
         })
@@ -28,7 +30,7 @@ export class JwtStrategy extends PassportStrategy(
 
     async validate(payload: JwtPayload, done: VerifiedCallback): Promise<any> {
         const { userId } = payload;
-        const admin = await this.adminInfoService.findByFields({
+        const admin = await this.adminFindService.findByFields({
             where: { admin_id: userId }
         });
 
@@ -40,29 +42,29 @@ export class JwtStrategy extends PassportStrategy(
     }
 }
 
-// @Injectable()
-// export class JwtRefreshStrategy extends PassportStrategy(
-//     Strategy,
-//     'jwt-refresh',
-// ) {
-//     constructor(private readonly adminInfoService: AdminInfoService) {
-//         super({
-//             secretOrKey: 'jwt-refresh-secret_key',
-//             jwtFromRequest: ExtractJwt.fromExtractors([refreshExtractor]),
-//             // ignoreExpiration: false,
-//             // passReqToCallback: true,
-//         });
-//     }
-//     async validate(payload: JwtPayload, done: VerifiedCallback): Promise<any> {
-//         // const { userId } = payload;
-//         // const admin = await this.adminInfoService.findByFields({
-//         //     where : {admin_id: userId}
-//         // });
+@Injectable()
+export class JwtRefreshStrategy extends PassportStrategy(
+    Strategy,
+    'jwt-refresh',
+) {
+    constructor(private readonly adminFindService: AdminFindService) {
+        super({
+            secretOrKey: jwtConfig.refreshSecretKey,
+            jwtFromRequest: ExtractJwt.fromExtractors([refreshExtractor]),
+            // ignoreExpiration: false,
+            // passReqToCallback: true,
+        });
+    }
+    async validate(payload: JwtPayload, done: VerifiedCallback): Promise<any> {
+        const { userId } = payload;
+        const admin = await this.adminFindService.findByFields({
+            where : {admin_id: userId}
+        });
 
-//         // if(!admin) {
-//         //     return done(new UnauthorizedException({message: '계정이 존재하지 않습니다.'}), false);
-//         // }
+        if(!admin) {
+            return done(new UnauthorizedException({message: '계정이 존재하지 않습니다.'}), false);
+        }
 
-//         // return done(null, admin);
-//     }
-// }
+        return done(null, admin);
+    }
+}

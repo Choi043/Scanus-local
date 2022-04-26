@@ -14,6 +14,10 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn
 @Entity('tb_project')
 export class ProjectEntity extends DateIdxEntity{
     @PrimaryGeneratedColumn()
+    @OneToOne(
+        () => CompanyProjectEntity,
+        (cmpnyPrjctEntity) => cmpnyPrjctEntity.prjct_idx,
+        )
     prjct_idx: number;
 
     @Column()
