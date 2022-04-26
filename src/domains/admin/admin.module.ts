@@ -1,8 +1,10 @@
-import { Module } from "@nestjs/common";
-import { JwtModule } from "@nestjs/jwt";
+import { forwardRef, Module } from "@nestjs/common";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { JwtStrategy } from "src/commons/jwt/jwt.strategy";
+import { AuthSessionService } from "../auth/application/auth.session.service";
+import { AuthTokenService } from "../auth/application/auth.token.service";
+import { AuthModule } from "../auth/auth.module";
+import { AdminFindService } from "./application/admin.find.service";
 import { AdminInfoService } from "./application/admin.info.service";
 import { AdminSignInService } from "./application/admin.sign-in.service";
 import { AdminSignUpService } from "./application/admin.sign-up.service";
@@ -14,16 +16,12 @@ import { AdminSignUpController } from "./presentation/admin.sign-up.controller";
 @Module({
     imports: [
         TypeOrmModule.forFeature([AdminRepository]),
-        PassportModule.register({ defaultStrategy: 'jwt' }),
-        JwtModule.register({
-            secret: 'SECRET_KEY',
-            signOptions: {expiresIn: 3600*24}
-        }),
+        forwardRef(() => AuthModule),
     ],
     exports: [
         TypeOrmModule,
         PassportModule,
-        JwtStrategy,
+        AdminFindService,
     ],
     controllers: [
         AdminSignUpController,
@@ -34,7 +32,9 @@ import { AdminSignUpController } from "./presentation/admin.sign-up.controller";
         AdminSignUpService,
         AdminSignInService,
         AdminInfoService,
-        JwtStrategy,
+        AdminFindService,
+        AuthSessionService,
+        AuthTokenService,
     ],
 })
 export class AdminModule {}
