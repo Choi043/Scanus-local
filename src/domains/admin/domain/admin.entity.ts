@@ -1,7 +1,9 @@
 import { IsNotEmpty, IsString } from "class-validator";
 import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
+import { AdminTokenEntity } from "src/domains/auth/domain/admin.token.entity";
 import { CompanyEntity } from "src/domains/company/domain/company.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { AdminRoleType } from "./admin.role";
 
 @Entity('tb_admin')
@@ -45,4 +47,10 @@ export class AdminEntity extends DateIdxEntity{
     @ManyToOne(() => CompanyEntity)
     @JoinColumn({ name: 'cmpny_idx'})
     companyEntity: CompanyEntity
+
+    @OneToOne(
+        () => AdminTokenEntity,
+        (adminTokenEntity => adminTokenEntity.adminEntity),
+    )
+    adminTokenEntity: Promise<AdminTokenEntity>;
 }
