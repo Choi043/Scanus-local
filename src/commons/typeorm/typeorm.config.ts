@@ -3,6 +3,7 @@ import * as config from 'config';
 import { AdminEntity } from "src/domains/admin/domain/admin.entity";
 import { BrandEntity } from "src/domains/brand/domain/brand.entity";
 import { CompanyEntity } from "src/domains/company/domain/company.entity";
+import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
 import { ProductEntity } from "src/domains/product/domain/product.entity";
 import { ProjectEntity } from "src/domains/project/domain/project.entity";
 
@@ -27,7 +28,7 @@ export const TypeormConfig = {
             ProjectEntity,
             BrandEntity,
             ProductEntity,
-            
+            CompanyProjectEntity,
         ],
     })
 }
