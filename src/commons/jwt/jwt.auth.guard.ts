@@ -7,7 +7,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         return super.canActivate(context)
     }
 
-    handleRequest(err: any, user: any, info: any) {
+    handleRequest(err: any, user: any, info: any) {        
         if (err || !user) {
             throw (
                 err || new UnauthorizedException('액세스 토큰이 유효하지 않습니다.')
