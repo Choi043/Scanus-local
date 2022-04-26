@@ -33,6 +33,23 @@ export class AdminInfoService {
             .getManyAndCount()
     }
 
+    async infoChannel(condition: string, find: string) {
+        
+        return await this.adminRepository
+            .createQueryBuilder('tb_admin')
+            .select([
+                'tb_company.cmpny_nm',
+                'tb_company.cmpny_cd',
+                'tb_admin.mn_nm',
+                'tb_admin.mn_email',
+                'tb_admin.reg_dt',
+            ])
+            .innerJoin('tb_admin.companyEntity', 'tb_company')
+            .where(`tb_admin.${condition} LIKE "${find}%"`)
+            .orderBy('tb_admin.reg_dt', 'ASC')
+            .getManyAndCount()
+    }
+
     async getAdminInfo(admin_idx: number) {
         const adminFind = await this.adminRepository.findOne({
             where: { admin_idx },
@@ -46,8 +63,9 @@ export class AdminInfoService {
         return adminFind;
     }
 
-    // 위치 지정을 잘 해야 함
 
+
+    // 위치 지정을 잘 해야 함
     async findById(admin_id: string): Promise<AdminEntity> {
         const adminFind = await this.adminRepository.findOne({
             where: { admin_id },

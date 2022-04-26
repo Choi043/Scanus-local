@@ -7,9 +7,10 @@ import { Sn_yn } from "src/commons/enumLIst/sn_yn";
 import { Surl_yn } from "src/commons/enumLIst/surl_yn";
 import { Unit_yn } from "src/commons/enumLIst/unit_yn";
 import { Use_yn } from "src/commons/enumLIst/use_yn";
+import { CompanyEntity } from "src/domains/company/domain/company.entity";
 
 export class ProjectRegisterDto {
-
+    // companyEntity: CompanyEntity
     
     @IsString()
     @IsNotEmpty({ message: '프로젝트 명을 입력해주세요.'})

@@ -7,7 +7,9 @@ import { Surl_yn } from "src/commons/enumLIst/surl_yn";
 import { Unit_yn } from "src/commons/enumLIst/unit_yn";
 import { Use_yn } from "src/commons/enumLIst/use_yn";
 import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CompanyEntity } from "src/domains/company/domain/company.entity";
+import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tb_project')
 export class ProjectEntity extends DateIdxEntity{
@@ -89,4 +91,11 @@ export class ProjectEntity extends DateIdxEntity{
     })
     use_yn: Use_yn
     
+    // @ManyToOne(() => CompanyEntity)
+    // @JoinColumn({ name: 'cmpny_idx'})
+    // companyEntity: CompanyEntity
+    
+    // @OneToOne(() => CompanyProjectEntity)
+    // @JoinColumn()
+    // company_project: CompanyProjectEntity;
 }

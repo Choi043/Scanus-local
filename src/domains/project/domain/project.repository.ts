@@ -7,10 +7,13 @@ import { ProjectEntity } from "./project.entity";
 export class ProjectRepository extends Repository<ProjectEntity> {
     
     async addProject(projectRegisterDto: ProjectRegisterDto): Promise<ProjectEntity> {
-        const {  prjct_nm, sn_yn, scratch_type, secure_type, unit_yn, surl_yn, blockchain_yn, pro_cnnc_yn } = projectRegisterDto
+        const {  
+            // companyEntity, 
+            prjct_nm, sn_yn, scratch_type, secure_type, unit_yn, surl_yn, blockchain_yn, pro_cnnc_yn } = projectRegisterDto
 
         const newProject: ProjectEntity = this.create({
             prjct_nm, 
+            // companyEntity,
             sn_yn, 
             scratch_type, 
             secure_type, 

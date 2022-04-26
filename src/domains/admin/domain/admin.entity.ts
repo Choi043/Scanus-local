@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsString } from "class-validator";
 import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { CompanyEntity } from "src/domains/company/domain/company.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { AdminRoleType } from "./admin.role";
 
 @Entity('tb_admin')
@@ -40,4 +41,8 @@ export class AdminEntity extends DateIdxEntity{
     @IsString()
     @IsNotEmpty()
     admin_type: AdminRoleType;
+
+    @ManyToOne(() => CompanyEntity)
+    @JoinColumn({ name: 'cmpny_idx'})
+    companyEntity: CompanyEntity
 }

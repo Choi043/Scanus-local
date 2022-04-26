@@ -10,13 +10,14 @@ import { Pagination } from "src/commons/typeorm/paginate";
 export class AdminRepository extends Repository<AdminEntity> {
 
     async createAdmin(adminSignUpDto: AdminSignUpDto): Promise<AdminEntity> {
-        const { admin_id, admin_pw, mn_nm, mn_tel, mn_email, admin_type } = adminSignUpDto
+        const { admin_id, companyEntity, admin_pw, mn_nm, mn_tel, mn_email, admin_type } = adminSignUpDto
 
         const salt = await bcrypt.genSalt()
         const hashedPassword = await bcrypt.hash(admin_pw, salt);
 
         const adminAccount: AdminEntity = this.create({
             admin_id,
+            companyEntity,
             admin_pw: hashedPassword,
             mn_nm,
             mn_tel,

@@ -1,5 +1,6 @@
 import { Controller, Get, Param, Query, Req, UseGuards } from "@nestjs/common";
 import { Request } from "express";
+import { CurrentRequest } from "src/commons/decorator/decorator.current.req";
 import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
 import { ProjectInfoService } from "../application/project.info.service";
 
@@ -17,11 +18,24 @@ export class ProjectInfoController {
 
     @Get('/infolist')
     @UseGuards(JwtAuthGuard)
-    async getInfoList(
-        @Req() req: Request
-    ) {
-        const condition = Object.entries(req.body)[0][0]
-        const find: string = String(Object.entries(req.body)[0][1])
-        return await this.projectInfoService.infoChannel( condition, find );
+    async getInfoList() {
+        return this.projectInfoService.list();
     }
+
+    @Get('/list')
+    @UseGuards(JwtAuthGuard)
+    async getProjectList(
+        @CurrentRequest() req: Request
+        ) {
+            let condition: string
+            let find: string
+            if( req === undefined ) {
+                condition = 'prjct_idx'
+                find = ''
+            } else {
+                condition = req[0]
+                find = String(req[1])
+            }
+            return await this.projectInfoService.infoChannel( condition, find );
+        }
 }

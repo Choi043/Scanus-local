@@ -20,13 +20,12 @@ export class ProjectInfoService {
         
         return projectFind;
     }
-    
-    async infoChannel(condition: string, find: string) {
-        
+
+    async list() {        
         return await this.projectRepository
             .createQueryBuilder('tb_project')
             .select([
-                // 'tb_company.cmpny_nm',
+                'tb_project.prjct_idx',
                 'tb_project.prjct_nm',
                 'tb_project.sn_yn',
                 'tb_project.unit_yn',
@@ -37,7 +36,28 @@ export class ProjectInfoService {
                 'tb_project.blockchain_yn',
                 'tb_project.reg_dt',
             ])
-            // .innerJoin('tb_project.prjct_idx', 'tb_company')
+            .orderBy('tb_project.reg_dt', 'ASC')
+            .getManyAndCount()
+    }
+    
+    async infoChannel(condition: string, find: string) {        
+        return await this.projectRepository
+            .createQueryBuilder('tb_project')
+            .select([
+                'tb_company.cmpny_nm',
+                'tb_project.prjct_idx',
+                'tb_project.prjct_nm',
+                'tb_project.sn_yn',
+                'tb_project.unit_yn',
+                'tb_project.pro_cnnc_yn',
+                'tb_project.secure_type',
+                'tb_project.scratch_type',
+                'tb_project.surl_yn',
+                'tb_project.blockchain_yn',
+                'tb_project.reg_dt',
+            ])
+            .leftJoin('tb_project.companyEntity', 'tb_company')
+            .innerJoin('','')
             .where(`tb_project.${condition} LIKE "${find}%"`)
             .orderBy('tb_project.reg_dt', 'ASC')
             .getManyAndCount()
