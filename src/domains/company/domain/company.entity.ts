@@ -1,6 +1,7 @@
 import { IsNotEmpty } from "class-validator";
 import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Leave_fl } from "./company.leave";
 
 @Entity('tb_company')
@@ -25,4 +26,9 @@ export class CompanyEntity extends DateIdxEntity {
     })
     leave_fl: Leave_fl
 
+    // @OneToOne(
+    //     () => CompanyProjectEntity,
+    //     (companyProjectEntity) => companyProjectEntity.cmpny_idx,
+    // )
+    // company_project: Promise<CompanyProjectEntity>;
 }

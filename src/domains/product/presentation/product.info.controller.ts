@@ -18,18 +18,8 @@ export class ProductInfoController {
 
     @Get('/infolist')
     @UseGuards(JwtAuthGuard)
-    async getInfoList(
-        @CurrentRequest() req: Request
-    ) {        
-        let condition
-        let find
-        if( req === undefined ) {
-            condition = 'pro_idx'
-            find = ''
-        } else {
-            condition = req[0]
-            find = String(req[1])
-        }
-        return await this.productInfoService.infoChannel( condition, find );
+    async getProductlist(
+    ) {
+        return this.productInfoService.list();
     }
 }

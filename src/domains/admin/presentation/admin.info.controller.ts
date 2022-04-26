@@ -1,4 +1,6 @@
 import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
+import { Request } from "express";
+import { CurrentRequest } from "src/commons/decorator/decorator.current.req";
 import { CurrentUser } from "src/commons/decorator/decorator.current.user";
 import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
 import { Roles } from "src/commons/role/role.decorator";
@@ -34,5 +36,21 @@ export class AdminInfoController {
     ) {
         return this.adminInfoService.list({ take, page });
     }
+
+    @Get('/list')
+    @UseGuards(JwtAuthGuard)
+    async getAdminList(
+        @CurrentRequest() req: Request) {
+            let condition: string
+            let find: string
+            if( req === undefined ) {
+                condition = 'admin_idx'
+                find = ''
+            } else {
+                condition = req[0]
+                find = String(req[1])
+            }
+            return await this.adminInfoService.infoChannel( condition, find );
+        }
 
 }

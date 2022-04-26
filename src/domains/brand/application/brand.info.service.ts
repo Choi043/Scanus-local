@@ -21,20 +21,16 @@ export class BrandInfoService {
         return brandFind;
     }
 
-    async list(options: PaginationOptions) {
-        const { take, page } = options;
+    async list() {
         return await this.brandRepository
             .createQueryBuilder('tb_brand')
             .select([
                 'tb_brand.brand_nm',
                 'tb_brand.brand_img',
-                // 'tb_company.cmpny_nm'
+                'tb_brand.reg_dt',
             ])
-            .take(take)
-            .skip(take * (page - 1))
-            // .innerJoin('tb_brand.cmpny_idx', 'tb_company')
             .where('tb_brand.reg_idx IS NULL')
-            .orderBy('tb_brand.reg_dt', 'DESC')
+            .orderBy('tb_brand.reg_dt', 'ASC')
             .getManyAndCount()
     }
 }

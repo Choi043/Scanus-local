@@ -17,9 +17,7 @@ export class BrandInfoController {
     @Get('/infolist')
     @UseGuards(JwtAuthGuard)
     async list(
-        @Query('take') take: number,
-        @Query('page') page: number,
     ) {
-        return this.brandInfoService.list({ take, page });
+        return this.brandInfoService.list();
     }
 }
