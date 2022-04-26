@@ -1,4 +1,5 @@
 import { forwardRef, Module } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthSessionService } from "../auth/application/auth.session.service";
@@ -16,12 +17,14 @@ import { AdminSignUpController } from "./presentation/admin.sign-up.controller";
 @Module({
     imports: [
         TypeOrmModule.forFeature([AdminRepository]),
+        PassportModule,
         forwardRef(() => AuthModule),
     ],
     exports: [
-        TypeOrmModule,
+        // TypeOrmModule,
         PassportModule,
         AdminFindService,
+        // JwtService,
     ],
     controllers: [
         AdminSignUpController,
@@ -34,7 +37,8 @@ import { AdminSignUpController } from "./presentation/admin.sign-up.controller";
         AdminInfoService,
         AdminFindService,
         AuthSessionService,
-        AuthTokenService,
+        // AuthTokenService,
+        // JwtService,
     ],
 })
 export class AdminModule {}

@@ -10,7 +10,7 @@ import { AdminTokenRepository } from "./domain/admin.token.repository";
 @Module({
     imports: [
         JwtModule.register({}),
-        forwardRef(() => AdminModule),
+        // forwardRef(() => AdminModule),
         TypeOrmModule.forFeature([AdminTokenRepository])
     ],
     exports: [
@@ -19,8 +19,8 @@ import { AdminTokenRepository } from "./domain/admin.token.repository";
     ],
     controllers: [],
     providers: [
-        JwtAccessStrategy,
-        JwtRefreshStrategy,
+        // JwtAccessStrategy,
+        // JwtRefreshStrategy,
         AuthTokenService,
         AuthSessionService,
     ],
