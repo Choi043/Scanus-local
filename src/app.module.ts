@@ -5,9 +5,9 @@ import { TypeormConfig } from './commons/typeorm/typeorm.config';
 import { AdminModule } from './domains/admin/admin.module';
 import { BrandModule } from './domains/brand/brand.module';
 import { CompanyModule } from './domains/company/company.module';
+import { CompanyProjectModule } from './domains/company_project/company_project.module';
 import { ProductModule } from './domains/product/product.module';
 import { ProjectModule } from './domains/project/project.module';
-// import { ProjectModule } from './domains/project/project.module';
 
 @Module({
   imports: [
@@ -17,6 +17,7 @@ import { ProjectModule } from './domains/project/project.module';
     ProjectModule,
     BrandModule,
     ProductModule,
+    CompanyProjectModule,
   ],
   controllers: [AppController],
 })
