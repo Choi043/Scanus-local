@@ -2,10 +2,10 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class COPYEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({comment: " IDX"})
     id: number;
 
-    @Column()
+    @Column('varchar', { length: 100, nullable: true, comment: '' })
     userID: string;
 
     @Column()
