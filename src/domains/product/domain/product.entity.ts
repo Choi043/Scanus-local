@@ -5,7 +5,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
 
 @Entity('tb_product')
 export class ProductEntity extends DateIdxEntity{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({comment: "제품IDX"})
     pro_idx: number;
 
     @Column('varchar', { 

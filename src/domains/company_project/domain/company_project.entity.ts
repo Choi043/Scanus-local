@@ -4,12 +4,12 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "
 
 @Entity('tb_company_project')
 export class CompanyProjectEntity  {    
-    @PrimaryColumn()
+    @PrimaryColumn({comment: "회사IDX"})
     @ManyToOne(() => CompanyEntity)
     @JoinColumn({ name: 'cmpny_idx'})
     cmpny_idx : CompanyEntity;
 
-    @PrimaryColumn()
+    @PrimaryColumn({comment: "프로젝트IDX"})
     @ManyToOne(() => ProjectEntity)
     @JoinColumn({ name: 'prjct_idx'})
     prjct_idx : ProjectEntity;

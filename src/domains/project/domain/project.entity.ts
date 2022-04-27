@@ -13,7 +13,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn
 
 @Entity('tb_project')
 export class ProjectEntity extends DateIdxEntity{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({comment: "프로젝트IDX"})
     @OneToOne(
         () => CompanyProjectEntity,
         (cmpnyPrjctEntity) => cmpnyPrjctEntity.prjct_idx,

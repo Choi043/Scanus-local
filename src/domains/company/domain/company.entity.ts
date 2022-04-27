@@ -6,7 +6,7 @@ import { Leave_fl } from "./company.leave";
 
 @Entity('tb_company')
 export class CompanyEntity extends DateIdxEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({comment: "회사IDX"})
     cmpny_idx: number;
 
     @Column('varchar', { comment: '회사명' })

@@ -9,7 +9,7 @@ import { AdminRoleType } from "./admin.role";
 @Entity('tb_admin')
 @Unique(['mn_email'])
 export class AdminEntity extends DateIdxEntity{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({comment: "관리자IDX"})
     admin_idx: number;
 
     @Column('varchar', { comment: '아이디' })
