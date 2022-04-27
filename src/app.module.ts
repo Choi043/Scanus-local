@@ -9,6 +9,7 @@ import { CompanyModule } from './domains/company/company.module';
 import { CompanyProjectModule } from './domains/company_project/company_project.module';
 import { ProductModule } from './domains/product/product.module';
 import { ProjectModule } from './domains/project/project.module';
+import { QRModule } from './domains/qr-master/qr.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ProjectModule } from './domains/project/project.module';
     BrandModule,
     ProductModule,
     CompanyProjectModule,
+    QRModule,
   ],
   controllers: [AppController],
 })
