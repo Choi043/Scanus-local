@@ -7,6 +7,7 @@ import { CompanyEntity } from "src/domains/company/domain/company.entity";
 import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
 import { ProductEntity } from "src/domains/product/domain/product.entity";
 import { ProjectEntity } from "src/domains/project/domain/project.entity";
+import { QRDetailEntity } from "src/domains/qr-detail/domain/qr-detail.entity";
 import { QREntity } from "src/domains/qr-master/domain/qr.entity";
 
 
@@ -33,6 +34,7 @@ export const TypeormConfig = {
             CompanyProjectEntity,
             AdminTokenEntity,
             QREntity,
+            QRDetailEntity,
         ],
     })
 }
