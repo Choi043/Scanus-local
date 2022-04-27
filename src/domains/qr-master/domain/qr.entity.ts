@@ -105,22 +105,22 @@ export class QREntity extends DateIdxEntity {
     })
     use_yn: Use_yn;
 
-    @Column('varchar', { nullable: true, comment: 'QR 이미지 경로' })
+    @Column('varchar', { length: 100, nullable: true, comment: 'QR 이미지 경로' })
     qr_img_path: string;
 
-    @Column('char', { comment: '_QR상태 (1:등록요청, 2: 등록중, 3:등록완료, 4:발송완료, 5:수령확인)' })
+    @Column('char', { length: 1, comment: '_QR상태 (1:등록요청, 2: 등록중, 3:등록완료, 4:발송완료, 5:수령확인)' })
     qr_state : string;
     
-    @Column('varchar', { nullable: true, comment: '받는 사람' })
+    @Column('varchar', { length: 20, nullable: true, comment: '받는 사람' })
     recrt_nm: string;
     
-    @Column('varchar', { nullable: true, comment: '연락처' })
+    @Column('varchar', { length: 15, nullable: true, comment: '연락처' })
     recrt_tel: string;
     
-    @Column('varchar', { nullable: true, comment: '택배사' })
+    @Column('varchar', { length: 20, nullable: true, comment: '택배사' })
     dely_nm: string;
     
-    @Column('varchar', { nullable: true, comment: '송장 번호' })
+    @Column('varchar', { length: 20, nullable: true, comment: '송장 번호' })
     dely_num: string;    
     
     @Column({

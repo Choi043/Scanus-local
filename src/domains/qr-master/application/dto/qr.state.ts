@@ -1,3 +1,5 @@
+import { IsOptional } from "class-validator";
+
 export class QRStateDto {
     qr_state: string;
 

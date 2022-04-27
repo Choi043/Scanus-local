@@ -11,35 +11,36 @@ export class QRStateChangeService {
         private readonly qrRepository: QRRepository
     ) { }
 
-    async stateChange(qr_idx: number, qrStateChange: QRStateDto): Promise<QREntity> {
+    async stateChange(qr_idx: number, qrStateChange: QRStateDto): Promise<QRStateDto> {
         const qrFind = await this.qrRepository.findOne({
             where: { qr_idx }
         })
 
-        const checkChannel:number = Number(qrFind.qr_state)
+        const checkChannel: number = Number(qrFind.qr_state)
 
-        if( checkChannel + 1 > Number(qrStateChange.qr_state)) {
+        if (
+            Number(qrStateChange.qr_state) > checkChannel + 1 ||
+            Number(qrStateChange.qr_state) === checkChannel ||
+            Number(qrStateChange.qr_state) < checkChannel
+        ) {
             throw new BadRequestException('현재 등록 상태를 확인해주세요.')
         }
-        else if ( checkChannel === 2){
-            this.stateInfoChange(qrStateChange, qrFind)
-        }
-
         qrFind.qr_state = qrStateChange.qr_state;
 
-        await this.qrRepository.save(qrFind)
-
-        return qrFind;
+        return await this.qrRepository.save(qrFind);
     }
 
-    public async stateInfoChange(qrStateChange: QRStateDto, qrInfo: QREntity) {
+    async delyInfoChange(qr_idx: number, qrStateChange: QRStateDto): Promise<QRStateDto> {
+        const qrFind = await this.qrRepository.findOne({
+            where: { qr_idx }
+        })
         
-        // qrStateChange.dely_nm = qrInfo.dely_nm,
-        // qrStateChange.dely_num = qrInfo.dely_num,
-        // qrStateChange.recrt_nm = qrInfo.recrt_nm,
-        // qrStateChange.recrt_tel = qrInfo.recrt_tel        
-        
-        return {
+        if(qrFind.qr_state === '2') {
+            qrFind.recrt_nm = qrStateChange.recrt_nm,
+            qrFind.recrt_tel = qrStateChange.recrt_tel,
+            qrFind.dely_nm = qrStateChange.dely_nm,
+            qrFind.dely_num = qrStateChange.dely_num
         }
+        return await this.qrRepository.save(qrFind);
     }
 }

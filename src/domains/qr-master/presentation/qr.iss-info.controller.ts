@@ -21,7 +21,8 @@ export class QrIssInfoController {
     }
 
     @Get('/list')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles(AdminRoleType.MASTER)
     async getAdminList(
         @CurrentRequest() req: Request) {
             let condition: string
