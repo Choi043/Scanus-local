@@ -45,4 +45,8 @@ export class AuthSessionService {
 
         return index !== -1 && this.jwtSessions[index].refreshToken === refreshToken;
     }
+
+    public printSession() {
+        console.log(this.jwtSessions);
+    }
 }

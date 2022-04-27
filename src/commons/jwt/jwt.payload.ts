@@ -1,5 +1,5 @@
 export class JwtPayload {
-    index?: number;
-    userId: string;
+    index: number;
+    userId?: string;
     role: string;
 }

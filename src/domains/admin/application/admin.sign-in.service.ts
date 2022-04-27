@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
-import { JwtPayload } from "src/commons/jwt/jwt.payload";
 import { AdminRepository } from "../domain/admin.repository";
 import { AdminSignInDto } from "./dto/admin.sign-in";
 import * as bcrypt from 'bcryptjs';
 import { AdminFindService } from "./admin.find.service";
 import { AuthSessionService } from "src/domains/auth/application/auth.session.service";
+import { AuthTokenService } from "src/domains/auth/application/auth.token.service";
+import { AdminEntity } from "../domain/admin.entity";
 
 @Injectable()
 export class AdminSignInService {
@@ -14,33 +14,65 @@ export class AdminSignInService {
         @InjectRepository(AdminRepository)
         private readonly adminRepository: AdminRepository,
         // private readonly adminFindService: AdminFindService,
-        // private readonly authService: string ,
-        // private readonly authSessionService: AuthSessionService,
-        // private readonly jwtService: JwtService,
+        private readonly authService: AuthTokenService,
+        private readonly authSessionService: AuthSessionService,
     ) { }
 
-    async signIn(adminSignInDto: AdminSignInDto): Promise<{ accessToken: string } | undefined> {
-        // const { admin_id, admin_pw } = adminSignInDto;
-        // const adminFind: AdminSignInDto = await this.adminRepository.findOne({
-        //     where: {admin_id}
-        // });
-        // if(!adminFind) {
-        //     throw new UnauthorizedException("등록되지 않은 계정입니다.");
-        // }
-        // const payload: JwtPayload = {
-        //     index: 1,
-        //     userId: adminFind.admin_id,
-        //     role: adminFind.admin_type
-        // };
-        // const accessToken = this.jwtService.sign('123');
+    async signIn(adminSignInDto: AdminSignInDto): Promise<{
+        accessToken: string
+        refreshToken: string
+    }> {
+        const { admin_id, admin_pw } = adminSignInDto;
+        const adminFind: AdminEntity = await this.adminRepository.findOne({
+            where: { admin_id }
+        });
+        const { admin_idx } = adminFind;
+        if (!adminFind) {
+            throw new UnauthorizedException("등록되지 않은 계정입니다.");
+        }
+        const hashPassword = await bcrypt.compare(admin_pw, adminFind.admin_pw)
+        if (!hashPassword) {
+            throw new BadRequestException("비밀번호가 일치하지 않습니다.");
+        }
 
-        // const hashPassword = await bcrypt.compare(admin_pw, adminFind.admin_pw)
-        // if(!hashPassword) {
-        //     throw new BadRequestException("비밀번호가 일치하지 않습니다.");
-        // }
-        // else {
-            // return { accessToken };
-        // }
-        return
+        const accessToken = await this.authService.createAccessToken({
+            index: admin_idx,
+            role: adminFind.admin_type,
+        });
+        const refreshToken = await this.authService.createRefreshToken({
+            index: admin_idx,
+            role: adminFind.admin_type,
+        });
+
+        await this.authService.setRefreshToken(adminFind, refreshToken)
+
+        this.authSessionService.addSession(admin_idx, accessToken, refreshToken);
+        this.authSessionService.printSession()
+
+
+        return { accessToken, refreshToken }
+    }
+
+    public async refreshToken(user: AdminEntity): Promise<{
+        accessToken: string;
+        refreshToken: string;
+    }> {
+        const { admin_idx } = user;
+
+        const accessToken = await this.authService.createAccessToken({
+            index: admin_idx,
+            role: user.admin_type,
+        });
+        const refreshToken = await this.authService.createRefreshToken({
+            index: admin_idx,
+            role: user.admin_type,
+        });
+
+        await this.authService.setRefreshToken(user, refreshToken);
+
+        this.authSessionService.addSession(admin_idx, accessToken, refreshToken);
+        this.authSessionService.printSession();
+
+        return { accessToken, refreshToken };
     }
 }

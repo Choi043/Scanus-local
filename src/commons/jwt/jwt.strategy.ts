@@ -7,8 +7,8 @@ import { AdminInfoService } from "src/domains/admin/application/admin.info.servi
 import { AdminRepository } from "src/domains/admin/domain/admin.repository";
 import { JwtPayload } from "./jwt.payload";
 import { AdminFindService } from 'src/domains/admin/application/admin.find.service';
-import * as config from 'config';
-const jwtConfig = config.get('jwt');
+// import * as config from 'config';
+// const jwtConfig = config.get('jwt');
 
 @Injectable()
 export class JwtAccessStrategy extends PassportStrategy(
@@ -19,19 +19,19 @@ export class JwtAccessStrategy extends PassportStrategy(
         private readonly adminFindService: AdminFindService,
     ) {
         super({
-            secretOrKey: jwtConfig.accessSecretKey,
-            // secret: 'secretkey',
-            // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            jwtFromRequest: ExtractJwt.fromExtractors([jwtAccessExtractor]),
+            // secretOrKey: jwtConfig.accessSecretKey,
+            secretOrKey: 'dev-scanus-admin-access',
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            // jwtFromRequest: ExtractJwt.fromExtractors([jwtAccessExtractor]),
             // ignoreExpiration: false,
             // passReqToCallback: true,
         })
     }
 
     async validate(payload: JwtPayload, done: VerifiedCallback): Promise<any> {
-        const { userId } = payload;
+        const { index } = payload;
         const admin = await this.adminFindService.findByFields({
-            where: { admin_id: userId }
+            where: { admin_idx: index }
         });
 
         if (!admin) {
@@ -51,7 +51,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
         private readonly adminFindService: AdminFindService
         ) {
         super({
-            secret: 'secret-refresh-key',
+            secretOrKey: 'dev-scanus-admin-refresh',
             // secretOrKey: jwtConfig.refreshSecretKey,
             jwtFromRequest: ExtractJwt.fromExtractors([refreshExtractor]),
             // ignoreExpiration: false,
@@ -59,9 +59,9 @@ export class JwtRefreshStrategy extends PassportStrategy(
         });
     }
     async validate(payload: JwtPayload, done: VerifiedCallback): Promise<any> {
-        const { userId } = payload;
+        const { index } = payload;
         const admin = await this.adminFindService.findByFields({
-            where : {admin_id: userId}
+            where: { admin_idx: index }
         });
 
         if(!admin) {
