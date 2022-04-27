@@ -50,6 +50,7 @@ export class QRIssuanceRequestDto {
     
     qr_img_path: string;
     
+    @IsNotEmpty()
     qr_state : string;
     
     recrt_nm: string;

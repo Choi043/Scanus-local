@@ -11,7 +11,7 @@ export class QRIssRequestController {
     @Post('/request')
     // @UseGuards(JwtAuthGuard, RoleGuard)
     // @Roles(AdminRoleType.MASTER)
-    async registerCompany(@Body() qrIssuanceRequestDto: QRIssuanceRequestDto): Promise<any> {
+    async qrIssuanceRequest(@Body() qrIssuanceRequestDto: QRIssuanceRequestDto): Promise<any> {
         return await this.qrIssRequestService.issuance(qrIssuanceRequestDto);
     }
 }

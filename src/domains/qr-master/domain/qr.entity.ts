@@ -15,7 +15,7 @@ import { Del_yn } from "./qr.delete";
 
 @Entity('tb_qr')
 export class QREntity extends DateIdxEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({comment: "QR 마스터IDX"})
     qr_idx: number;
 
     @ManyToOne(() => CompanyEntity, { nullable:false })
@@ -82,7 +82,7 @@ export class QREntity extends DateIdxEntity {
         type: 'enum',
         enum: Surl_yn,
         name: 'surl_yn',
-        // default: Surl_yn.Type_0,
+        default: Surl_yn.Type_N,
         comment: '_단축URL사용여부 (Y:사용, N:미사용)'
     })
     surl_yn: Surl_yn;
@@ -91,7 +91,7 @@ export class QREntity extends DateIdxEntity {
         type: 'enum',
         enum: Blockchain_yn,
         name: 'blockchain_yn',
-        // default: Blockchain_yn.Type_0,
+        default: Blockchain_yn.Type_N,
         comment: '_블록체인 사용여부(Y:사용, N:미사용)'
     })
     blockchain_yn: Blockchain_yn;
