@@ -15,7 +15,7 @@ export class AuthTokenService {
         private readonly jwtService: JwtService,
     ) { }
 
-    public async verifyRefreshToken(token) {
+    public async verifyRefreshToken(token: string) {
         return await this.jwtService.verifyAsync(token, {
             secret: 'dev-scanus-admin-refresh'
             // secret: jwtConfig.refreshSecretKey

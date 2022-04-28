@@ -19,7 +19,7 @@ export class AuthSessionService {
         const index = this.jwtSessions.findIndex(
             (jwtSession) => jwtSession.admin_idx === admin_idx,
         );
-        if( index === -1) {
+        if (index === -1) {
             this.jwtSessions.push(tokenInfo);
         } else {
             this.jwtSessions[index] = {
@@ -30,14 +30,22 @@ export class AuthSessionService {
         }
     }
 
+    
+    public removeSession(admin_idx: number) {
+        this.jwtSessions = this.jwtSessions.filter(
+            (jwtSession) => jwtSession.admin_idx !== admin_idx,
+        );
+    }
+
+    // admin_idx =  ,index = -1, 
     validateAccessToken(admin_idx: number, accessToken: string) {
         const index = this.jwtSessions.findIndex(
             (jwtSession) => jwtSession.admin_idx === admin_idx,
         );
-
+        console.log('this.jwtSessions ', this.jwtSessions);
         return index !== -1 && this.jwtSessions[index].accessToken === accessToken;
     }
-    
+
     validateRefreshToken(admin_idx: number, refreshToken: string) {
         const index = this.jwtSessions.findIndex(
             (jwtSession) => jwtSession.admin_idx === admin_idx,
