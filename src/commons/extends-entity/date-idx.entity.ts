@@ -4,7 +4,7 @@ export abstract class DateIdxEntity {
     @Column('int', { nullable: true, comment: '등록IDX' })
     reg_idx: number;
 
-    @Column('datetime', { default: () => 'current_timestamp',  comment: '등록일시' })
+    @Column('datetime', { default: () => 'current_timestamp', nullable: true, comment: '등록일시' })
     reg_dt: Date;
 
     @Column('int', { nullable: true, comment: '수정DIX' })
