@@ -15,31 +15,30 @@ export class QRDetailEntity {
     @Column("varchar", { length: 3, comment: "회사코드(3자리)" })
     cmpny_cd: string;
 
-    @Column("varchar", { length: 15, comment: "유니크코드" })
+    @Column("varchar", { length: 15, nullable: true, comment: "유니크코드" })
     unique_cd: string;
 
-    @Column("varchar", { length: 10, comment: "QR 단위 (item:개별, box:박스단위)" })
+    @Column("varchar", { length: 10, nullable: true, comment: "QR 단위 (item:개별, box:박스단위)" })
     unit: string;
 
-    @Column("varchar", { length: 250, comment: "QR 데이터 (full-URL) - encoded_key" })
+    @Column("varchar", { length: 250, nullable: true, comment: "QR 데이터 (full-URL) - encoded_key" })
     furl: string;
 
-    @Column("varchar", { length: 250, comment: "QR 데이터 (shorten-URL) - surl_key" })
+    @Column("varchar", { length: 250, nullable: true, comment: "QR 데이터 (shorten-URL) - surl_key" })
     surl: string;
 
-    @Column("varchar", { length: 250, comment: "QR 코드키" })
+    @Column("varchar", { length: 250, nullable: true, comment: "QR 코드키" })
     access_key: string;
 
     @Column({
         type: 'enum',
-        enum: Scratch_type,
+        enum: ['Y', 'N'],
         name: 'scratch_type',
-        nullable: true,
         comment: '_스크래치 (Y:사용, N:미사용)'
     })
     scratch_type: Scratch_type
 
-    @Column("varchar", { length: 10, comment: "Secure 코드" })
+    @Column("varchar", { length: 10, nullable: true, comment: "Secure 코드" })
     secure_cd: string;
 
     @Column({
