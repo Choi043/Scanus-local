@@ -10,7 +10,7 @@ export class CompanyRegisterService {
         private readonly companyRepository: CompanyRepository
     ) { }
 
-    async register(companyRegisterDto: CompanyRegisterDto): Promise<CompanyRegisterDto | undefined> {
+    async register(companyRegisterDto: CompanyRegisterDto): Promise<CompanyRegisterDto> {
         return await this.companyRepository.addCompany(companyRegisterDto);
     }
 }

@@ -36,7 +36,7 @@ export class AdminFindService {
         return adminFind;
     }
 
-    async findByFields(options: FindOneOptions<AdminEntity>): Promise<AdminEntity | undefined> {
+    async findByFields(options: FindOneOptions<AdminEntity>): Promise<AdminEntity> {
         const fieldFind = await this.adminRepository.findOne(options);
 
         if (!fieldFind) {

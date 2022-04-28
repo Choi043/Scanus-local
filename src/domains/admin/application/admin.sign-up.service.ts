@@ -10,7 +10,7 @@ export class AdminSignUpService {
         private readonly adminRepository: AdminRepository
     ) {}
 
-    async signUp(adminSignUpDto: AdminSignUpDto): Promise<AdminSignUpDto | undefined> {
+    async signUp(adminSignUpDto: AdminSignUpDto): Promise<AdminSignUpDto> {
         return await this.adminRepository.createAdmin(adminSignUpDto);
     }
 }

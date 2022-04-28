@@ -10,7 +10,7 @@ export class ProjectRegisterService {
         private readonly projectRepository: ProjectRepository
     ) {}
 
-    async register(projectRegisterDto: ProjectRegisterDto): Promise<ProjectRegisterDto | undefined> {
+    async register(projectRegisterDto: ProjectRegisterDto): Promise<ProjectRegisterDto> {
         return await this.projectRepository.addProject(projectRegisterDto);
     }
 }

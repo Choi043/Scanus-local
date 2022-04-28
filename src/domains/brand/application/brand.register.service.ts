@@ -10,7 +10,7 @@ export class BrandRegisterService {
         private readonly brandRepository: BrandRepository
     ) {}
     
-    async register(brandRegisterDto: BrandRegisterDto): Promise<BrandRegisterDto | undefined> {
+    async register(brandRegisterDto: BrandRegisterDto): Promise<BrandRegisterDto> {
         return await this.brandRepository.addBrand(brandRegisterDto);
     }
 }

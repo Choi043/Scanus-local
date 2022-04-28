@@ -10,7 +10,7 @@ export class ProductRegisterService {
         private readonly productRepository: ProductRepository
     ) {}
     
-    async register(productRegisterDto: ProductRegisterDto): Promise<ProductRegisterDto | undefined> {
+    async register(productRegisterDto: ProductRegisterDto): Promise<ProductRegisterDto> {
         return await this.productRepository.addProduct(productRegisterDto);
     }
 }
