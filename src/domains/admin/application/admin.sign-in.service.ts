@@ -7,33 +7,29 @@ import { AdminFindService } from "./admin.find.service";
 import { AuthSessionService } from "src/domains/auth/application/auth.session.service";
 import { AuthTokenService } from "src/domains/auth/application/auth.token.service";
 import { AdminEntity } from "../domain/admin.entity";
+import { AdminSignInResponse } from "./dto/admin-sign-in.response";
 
 @Injectable()
 export class AdminSignInService {
     constructor(
         @InjectRepository(AdminRepository)
         private readonly adminRepository: AdminRepository,
-        // private readonly adminFindService: AdminFindService,
+        private readonly adminFindService: AdminFindService,
         private readonly authService: AuthTokenService,
         private readonly authSessionService: AuthSessionService,
     ) { }
 
     async signIn(adminSignInDto: AdminSignInDto): Promise<{
+        adminSignInResponse: AdminSignInResponse;
         accessToken: string
         refreshToken: string
     }> {
         const { admin_id, admin_pw } = adminSignInDto;
-        const adminFind: AdminEntity = await this.adminRepository.findOne({
-            where: { admin_id }
-        });
+        const adminFind: AdminEntity = await this.adminFindService.findById(admin_id);
+
         const { admin_idx } = adminFind;
-        if (!adminFind) {
-            throw new UnauthorizedException("등록되지 않은 계정입니다.");
-        }
-        const hashPassword = await bcrypt.compare(admin_pw, adminFind.admin_pw)
-        if (!hashPassword) {
-            throw new BadRequestException("비밀번호가 일치하지 않습니다.");
-        }
+
+        await this.comparePassword(admin_pw, adminFind.admin_pw)
 
         const accessToken = await this.authService.createAccessToken({
             index: admin_idx,
@@ -49,8 +45,9 @@ export class AdminSignInService {
         this.authSessionService.addSession(admin_idx, accessToken, refreshToken);
         this.authSessionService.printSession()
 
+        const adminSignInResponse = AdminSignInResponse.of(adminFind);
 
-        return { accessToken, refreshToken }
+        return { adminSignInResponse, accessToken, refreshToken }
     }
 
     public async refreshToken(user: AdminEntity): Promise<{
@@ -74,5 +71,15 @@ export class AdminSignInService {
         this.authSessionService.printSession();
 
         return { accessToken, refreshToken };
+    }
+
+    public async comparePassword(
+        password: string,
+        comparePassword: string,
+    ): Promise<void> {
+        const hashPassword = await bcrypt.compare(password, comparePassword)
+        if (!hashPassword) {
+            throw new BadRequestException("비밀번호가 일치하지 않습니다.");
+        }
     }
 }

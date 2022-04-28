@@ -6,7 +6,6 @@ import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
 import { Roles } from "src/commons/role/role.decorator";
 import { RoleGuard } from "src/commons/role/role.guard";
 import { AdminInfoService } from "../application/admin.info.service";
-import { AdminInfoDto } from "../application/dto/admin.info";
 import { AdminEntity } from "../domain/admin.entity";
 import { AdminRoleType } from "../domain/admin.role";
 
@@ -38,7 +37,8 @@ export class AdminInfoController {
     }
 
     @Get('/list')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles(AdminRoleType.MASTER)
     async getAdminList(
         @CurrentRequest() req: Request) {
             let condition: string
