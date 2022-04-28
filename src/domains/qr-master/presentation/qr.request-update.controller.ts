@@ -12,7 +12,7 @@ export class QRReqestUpdateController {
         private readonly qrRequestUpdateService: QRReqestUpdateService
     ) { }
 
-    @Patch('/request/:id')
+    @Patch('/update/:id')
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Roles(AdminRoleType.MASTER)
     async requestUpdate(

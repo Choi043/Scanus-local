@@ -12,7 +12,7 @@ export class QRStateChangeController {
         private readonly qrStateChangeService: QRStateChangeService
     ) {}
 
-    @Post('/state/:id')
+    @Post('/state-change/:id')
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Roles(AdminRoleType.MASTER)
     async qrStateChange(
@@ -22,7 +22,7 @@ export class QRStateChangeController {
         return await this.qrStateChangeService.stateChange(id, qrStateChangeDto);
     }
 
-    @Post('/stateinfo/:id')
+    @Post('/state-info/:id')
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Roles(AdminRoleType.MASTER)
     async qrStateInfoChange(

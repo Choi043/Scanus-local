@@ -1,4 +1,4 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 import { Blockchain_yn } from "src/commons/enumLIst/bloackchain_yn";
 import { Pro_cnnc_yn } from "src/commons/enumLIst/pro_cnnc_yn";
 import { Scratch_type } from "src/commons/enumLIst/scratch_type";
@@ -39,11 +39,11 @@ export class QRIssuanceRequestDto {
     @IsNotEmpty()
     scratch_type: Scratch_type;
     
-    @IsNotEmpty()
-    surl_yn: Surl_yn;
+    @IsOptional()
+    surl_yn?: Surl_yn;
     
-    @IsNotEmpty()
-    blockchain_yn: Blockchain_yn;
+    @IsOptional()
+    blockchain_yn?: Blockchain_yn;
 
     @IsNotEmpty()
     use_yn: Use_yn;

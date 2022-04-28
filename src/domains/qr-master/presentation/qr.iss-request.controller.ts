@@ -12,7 +12,7 @@ export class QRIssRequestController {
         private readonly qrIssRequestService: QRIssRequestService
     ) {}
 
-    @Post('/request')
+    @Post('/register')
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Roles(AdminRoleType.MASTER)
     async qrIssuanceRequest(@Body() qrIssuanceRequestDto: QRIssuanceRequestDto): Promise<any> {

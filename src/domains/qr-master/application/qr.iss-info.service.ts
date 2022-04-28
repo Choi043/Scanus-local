@@ -20,6 +20,7 @@ export class QRIssInfoService {
     // 회사명, 프로젝트명, 회사코드, 일련번호, 스크래치, 난수, 포장박스, 상품정보, 단축URL, 블록체인 사용여부, 수량, 상태
     async infoChannel(condition: string, find: string) {       
         const whereQuery = this.checkChannel(condition, find)
+        console.log('whereQuery: ', whereQuery);
 
         return await this.qrRepository
             .createQueryBuilder('tb_qr')
@@ -45,7 +46,7 @@ export class QRIssInfoService {
             .getManyAndCount()
     }
 
-    async checkChannel(condition: string, find: string) {
+    public checkChannel(condition: string, find: string) {
         let query: string;
         if (condition === 'cmpny_nm' || condition === 'cmpny_cd') {
             query = `tb_company.${condition} LIKE "${find}%"`;
@@ -56,7 +57,7 @@ export class QRIssInfoService {
         else if ( condition === 'reg_dt' ) {
             query = `tb_qr.${condition} LIKE "${find}%"`;
         }else if ( condition === 'qr_idx') {
-            return 0;
+            return ;
         }
         else {
             throw new BadRequestException("잘못된 값을 입력하셨습니다.")
