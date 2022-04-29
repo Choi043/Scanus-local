@@ -12,10 +12,10 @@ export class CompanyProjectAddController {
         private readonly companyProjectAddService : CompanyProjectAddService
     ) {}
 
-    // @Post('/register')
-    // @UseGuards(JwtAuthGuard, RoleGuard)
-    // @Roles(AdminType.MASTER)
-    // async registerCompany(@Body() companyProjectInfoDto: CompanyProjectInfoDto): Promise<any> {
-    //     return await this.companyProjectAddService.register(companyRegisterDto);
-    // }
+    @Post('/register')
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles(AdminType.MASTER)
+    async registerCompany(@Body() companyProjectInfoDto: CompanyProjectInfoDto): Promise<any> {
+        return await this.companyProjectAddService.register(companyProjectInfoDto);
+    }
 }

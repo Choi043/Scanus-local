@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "ty
 
 @Entity('tb_admin_token')
 export class AdminTokenEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({ unsigned: true, comment: '토큰 IDX'})
     id: number;
 
     @OneToOne(() => AdminEntity, (adminEntity) => adminEntity)

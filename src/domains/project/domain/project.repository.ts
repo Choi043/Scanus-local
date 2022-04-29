@@ -9,11 +9,11 @@ export class ProjectRepository extends Repository<ProjectEntity> {
     async addProject(projectRegisterDto: ProjectRegisterDto): Promise<ProjectEntity> {
         const {  
             // companyEntity, 
-            prjct_nm, sn_yn, scratch_type, secure_type, unit_yn, surl_yn, blockchain_yn, pro_cnnc_yn } = projectRegisterDto
+            prjct_nm, sn_yn, scratch_type, secure_type, unit_yn, surl_yn, blockchain_yn, pro_cnnc_yn, company_project  } = projectRegisterDto
 
         const newProject: ProjectEntity = this.create({
             prjct_nm, 
-            // companyEntity,
+            company_project,
             sn_yn, 
             scratch_type, 
             secure_type, 
