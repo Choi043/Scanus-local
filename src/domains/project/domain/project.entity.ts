@@ -7,20 +7,15 @@ import { Surl_yn } from "src/commons/enumLIst/surl_yn";
 import { Unit_yn } from "src/commons/enumLIst/unit_yn";
 import { Use_yn } from "src/commons/enumLIst/use_yn";
 import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
-import { CompanyEntity } from "src/domains/company/domain/company.entity";
 import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tb_project')
 export class ProjectEntity extends DateIdxEntity{
-    @PrimaryGeneratedColumn({comment: "프로젝트IDX"})
-    @OneToOne(
-        () => CompanyProjectEntity,
-        (cmpnyPrjctEntity) => cmpnyPrjctEntity.prjct_idx,
-        )
+    @PrimaryGeneratedColumn({ unsigned: true, comment: "프로젝트IDX"})
     prjct_idx: number;
 
-    @Column()
+    @Column('varchar', { length: 50, comment: '프로젝트명'})
     prjct_nm: string;
 
     @Column({
@@ -55,7 +50,7 @@ export class ProjectEntity extends DateIdxEntity{
         enum: Secure_type,
         name: 'secure_type',
         default: Secure_type.Type_0,
-        comment: '_난수 (0:모두가능, 1:숫자 (6자리), 3:숫자 (3자리), 3:영문대문자 +숫자(8자리))'
+        comment: '_난수 (0:모두가능, 1:숫자 (6자리), 2:숫자 (3자리), 3:영문대문자 +숫자(8자리))'
     })
     secure_type: Secure_type
     
@@ -99,7 +94,9 @@ export class ProjectEntity extends DateIdxEntity{
     // @JoinColumn({ name: 'cmpny_idx'})
     // companyEntity: CompanyEntity
     
-    // @OneToOne(() => CompanyProjectEntity)
-    // @JoinColumn()
-    // company_project: CompanyProjectEntity;
+    @OneToMany(
+        () => CompanyProjectEntity,
+        (companyProjectEntity) => companyProjectEntity.prjct_idx
+        )
+    company_project: CompanyProjectEntity;
 }

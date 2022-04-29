@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsOptional } from "class-validator";
-import { Blockchain_yn } from "src/commons/enumLIst/bloackchain_yn";
-import { Pro_cnnc_yn } from "src/commons/enumLIst/pro_cnnc_yn";
-import { Scratch_type } from "src/commons/enumLIst/scratch_type";
-import { Secure_type } from "src/commons/enumLIst/secure_type";
-import { Sn_yn } from "src/commons/enumLIst/sn_yn";
-import { Surl_yn } from "src/commons/enumLIst/surl_yn";
-import { Unit_yn } from "src/commons/enumLIst/unit_yn";
+import { Blockchain_yn, Blockchain_yn_QR } from "src/commons/enumLIst/bloackchain_yn";
+import { Pro_cnnc_yn, Pro_cnnc_yn_QR } from "src/commons/enumLIst/pro_cnnc_yn";
+import { Scratch_type, Scratch_type_QR } from "src/commons/enumLIst/scratch_type";
+import { Secure_type, Secure_type_QR } from "src/commons/enumLIst/secure_type";
+import { Sn_yn, Sn_yn_QR } from "src/commons/enumLIst/sn_yn";
+import { Surl_yn, Surl_yn_QR } from "src/commons/enumLIst/surl_yn";
+import { Unit_yn, Unit_yn_QR } from "src/commons/enumLIst/unit_yn";
 import { Use_yn } from "src/commons/enumLIst/use_yn";
 import { CompanyEntity } from "src/domains/company/domain/company.entity";
 import { ProductEntity } from "src/domains/product/domain/product.entity";
@@ -25,25 +25,25 @@ export class QRIssuanceRequestDto {
     qy: number;
 
     @IsNotEmpty()
-    sn_yn: Sn_yn;
+    sn_yn: Sn_yn_QR;
     
     @IsNotEmpty()
-    unit_yn: Unit_yn;
+    unit_yn: Unit_yn_QR;
     
     @IsNotEmpty()
-    pro_cnnc_yn: Pro_cnnc_yn;
+    pro_cnnc_yn: Pro_cnnc_yn_QR;
     
     @IsNotEmpty()
-    secure_type: Secure_type;
+    secure_type: Secure_type_QR;
     
     @IsNotEmpty()
-    scratch_type: Scratch_type;
+    scratch_type: Scratch_type_QR;
     
     @IsOptional()
-    surl_yn?: Surl_yn;
+    surl_yn?: Surl_yn_QR;
     
     @IsOptional()
-    blockchain_yn?: Blockchain_yn;
+    blockchain_yn?: Blockchain_yn_QR;
 
     @IsNotEmpty()
     use_yn: Use_yn;

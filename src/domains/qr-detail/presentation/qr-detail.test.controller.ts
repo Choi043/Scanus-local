@@ -10,9 +10,9 @@ export class TestController {
     @Post('/secure')
     @UseGuards(JwtAuthGuard)
     async test(@Req() req:Request) {
-        const { type, length } = req.body;
+        const { secure_cd } = req.body;
 
-        return this.qrDetailTest.secureCode(type, length);
+        return this.qrDetailTest.secureCode(secure_cd);
     }
 
     @Post('/furl')

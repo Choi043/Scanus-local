@@ -4,30 +4,29 @@ import { CompanyEntity } from "src/domains/company/domain/company.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tb_brand')
-export class BrandEntity extends DateIdxEntity{
-    @PrimaryGeneratedColumn({comment: "브랜드IDX"})
+export class BrandEntity extends DateIdxEntity {
+    @PrimaryGeneratedColumn({ unsigned: true, comment: "브랜드IDX" })
     brand_idx: number;
 
-    @Column('varchar', { comment: '브랜드명' })
+    @Column('varchar', { length: 50, comment: '브랜드명' })
     brand_nm: string;
-    
-    @Column('varchar', { 
+
+    @Column('varchar', {
+        length: 250,
         nullable: true,
-        comment: '브랜드 이미지' 
+        comment: '브랜드 이미지'
     })
     brand_img: string;
-    
+
     @Column({
         type: 'enum',
         enum: Use_yn,
-        name: 'use_yn',
         default: Use_yn.USE_DEFAULT,
         comment: '_사용유무 (Y:사용, N:미사용)'
     })
     use_yn: Use_yn
 
     @ManyToOne(() => CompanyEntity)
-    @JoinColumn({ name: 'cmpny_idx'})
+    @JoinColumn({ name: 'cmpny_idx' })
     companyEntity: CompanyEntity
-
 }

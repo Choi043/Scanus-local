@@ -6,7 +6,7 @@ import { QR_upload } from "./qr-detail.upload";
 @Entity('tb_qr_detail')
 @Unique(['access_key'])
 export class QRDetailEntity {
-    @PrimaryGeneratedColumn({ comment: "QR 디테일IDX" })
+    @PrimaryGeneratedColumn({ unsigned: true, comment: "QR 디테일IDX" })
     qr_detail_idx: number;
 
     @Column("int", { comment: "QR IDX" })
@@ -66,6 +66,6 @@ export class QRDetailEntity {
     @Column('varchar', { length: 50, nullable: true, comment: 'item일괄 생성 후 완료되면 BOX 단위에 매칭할 ProductObject full address 가져오기 위한값. core 전용 필드' })
     po_full_addr: string;
 
-    @Column('varchar', { default: () => 'current_timestamp',  comment: '등록일시' })
+    @Column('datetime', { default: () => 'current_timestamp',  comment: '등록일시' })
     reg_dt: Date;
 }

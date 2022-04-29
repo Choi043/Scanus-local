@@ -1,17 +1,17 @@
 import { IsNotEmpty, IsString } from "class-validator";
-import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
 import { AdminTokenEntity } from "src/domains/auth/domain/admin.token.entity";
 import { CompanyEntity } from "src/domains/company/domain/company.entity";
-import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { AdminType } from "./admin.role";
 import { ConState } from "./admin.state";
 
 @Entity('tb_admin')
 export class AdminEntity{
-    @PrimaryGeneratedColumn({ unsigned: true, comment: "관리자IDX"})
+    // unsigned : true시 부호 없음, comment : 코멘트
+    @PrimaryGeneratedColumn({ unsigned: true, comment: "관리자IDX" })
     admin_idx: number;    
 
+    // ManyToOne : 
     @ManyToOne(() => CompanyEntity)
     @JoinColumn({ name: 'cmpny_idx'})
     companyEntity: CompanyEntity
@@ -38,19 +38,21 @@ export class AdminEntity{
     @IsString()
     mn_email: string;
 
+    // 기본값 Admin -> Master
     @Column({
         type: 'enum', 
         enum: AdminType, 
-        default: AdminType.ADMIN,
+        default: AdminType.MASTER,
         comment: '_관리자타입 (M:마스터, A:고객사 어드민)' 
     })
     @IsNotEmpty()
     admin_type: AdminType;
     
+    // 기본값(Master 계정만 생성,관리하기에) 승인대기 -> 활성화
     @Column({
         type: 'enum', 
         enum: ConState, 
-        default: ConState.TYPE_1,
+        default: ConState.TYPE_2,
         comment: '_관리자상태 (1:승인대기,2:활성화,3:반려,4:비활성화)' 
     })
     @IsNotEmpty()
