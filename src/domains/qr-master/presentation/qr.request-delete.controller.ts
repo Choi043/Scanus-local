@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Param, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
 import { Roles } from "src/commons/role/role.decorator";
 import { RoleGuard } from "src/commons/role/role.guard";
-import { AdminRoleType } from "src/domains/admin/domain/admin.role";
+import { AdminType } from "src/domains/admin/domain/admin.role";
 import { QRReqestStateDto } from "../application/dto/qr.request-update";
 import { QRReqestDeleteService } from "../application/qr.request-delete.service";
 
@@ -14,7 +14,7 @@ export class QRReqestDeleteController {
 
     @Delete('/delete/:id')
     @UseGuards(JwtAuthGuard, RoleGuard)
-    @Roles(AdminRoleType.MASTER)
+    @Roles(AdminType.MASTER)
     async requestDelete(
         @Param('id') id: number,
         @Body() qrReqestDeleteDto: QRReqestStateDto

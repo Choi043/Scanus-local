@@ -2,7 +2,7 @@ import { Body, Controller, Delete, UseGuards, UsePipes, ValidationPipe } from "@
 import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
 import { Roles } from "src/commons/role/role.decorator";
 import { RoleGuard } from "src/commons/role/role.guard";
-import { AdminRoleType } from "src/domains/admin/domain/admin.role";
+import { AdminType } from "src/domains/admin/domain/admin.role";
 import { ProductDeleteService } from "../application/product.delete.service";
 
 @Controller('product')
@@ -13,7 +13,7 @@ export class ProductDeleteController {
 
     @Delete('/delete')
     @UseGuards(JwtAuthGuard, RoleGuard)
-    @Roles(AdminRoleType.MASTER)
+    @Roles(AdminType.MASTER)
     @UsePipes(ValidationPipe)
     async deleteProduct(
         @Body('product_idx') product_idx: number

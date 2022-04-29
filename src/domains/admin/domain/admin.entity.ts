@@ -3,13 +3,13 @@ import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
 import { AdminTokenEntity } from "src/domains/auth/domain/admin.token.entity";
 import { CompanyEntity } from "src/domains/company/domain/company.entity";
 import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
-import { AdminRoleType } from "./admin.role";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { AdminType } from "./admin.role";
 import { ConState } from "./admin.state";
 
 @Entity('tb_admin')
-export class AdminEntity extends DateIdxEntity{
-    @PrimaryGeneratedColumn({comment: "관리자IDX"})
+export class AdminEntity{
+    @PrimaryGeneratedColumn({ unsigned: true, comment: "관리자IDX"})
     admin_idx: number;    
 
     @ManyToOne(() => CompanyEntity)
@@ -40,12 +40,12 @@ export class AdminEntity extends DateIdxEntity{
 
     @Column({
         type: 'enum', 
-        enum: AdminRoleType, 
-        default: AdminRoleType.ADMIN,
+        enum: AdminType, 
+        default: AdminType.ADMIN,
         comment: '_관리자타입 (M:마스터, A:고객사 어드민)' 
     })
     @IsNotEmpty()
-    admin_type: AdminRoleType;
+    admin_type: AdminType;
     
     @Column({
         type: 'enum', 
@@ -56,8 +56,20 @@ export class AdminEntity extends DateIdxEntity{
     @IsNotEmpty()
     con_state: ConState;
 
+    @Column('text', { nullable: true, comment: '반려사유'})
+    con_text: string;
+
     @Column('int', { default:0, comment: '비밀번호 실패 카운트'})
-    pw_count: number;
+    pw_count: number;    
+
+    @Column('datetime', { default: () => 'current_timestamp', nullable: true, comment: '등록일시' })
+    reg_dt: Date;
+
+    @Column('int', { nullable: true, comment: '수정DIX' })
+    mod_idx: number;
+    
+    @UpdateDateColumn({ nullable: true, comment: '수정일시' })
+    mod_dt: Date;
 
     @OneToOne(
         () => AdminTokenEntity,

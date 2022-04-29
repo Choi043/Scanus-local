@@ -1,5 +1,4 @@
 import { IsString } from "class-validator";
-import { AdminRoleType } from "../../domain/admin.role";
 
 export class AdminInfoDto {    
     @IsString()

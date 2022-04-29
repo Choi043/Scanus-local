@@ -4,11 +4,11 @@ import { Injectable, UseGuards } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ProjectRepository } from "../domain/project.repository";
 import { Roles } from 'src/commons/role/role.decorator';
-import { AdminRoleType } from 'src/domains/admin/domain/admin.role';
+import { AdminType } from 'src/domains/admin/domain/admin.role';
 
 @Injectable()
 @UseGuards(JwtAuthGuard, RoleGuard)
-@Roles(AdminRoleType.MASTER)
+@Roles(AdminType.MASTER)
 export class ProjectDeleteService {
     constructor(
         @InjectRepository(ProjectRepository)

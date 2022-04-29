@@ -2,14 +2,14 @@ import { Body, Controller, Get, Param, Patch, UseGuards, UsePipes, ValidationPip
 import { AuthGuard } from "@nestjs/passport";
 import { Roles } from "src/commons/role/role.decorator";
 import { RoleGuard } from "src/commons/role/role.guard";
-import { AdminRoleType } from "src/domains/admin/domain/admin.role";
+import { AdminType } from "src/domains/admin/domain/admin.role";
 import { CompanyLeaveService } from "../application/company.leave.service";
 import { CompanyEditDto } from "../application/dto/company.edit";
 import { CompanyEntity } from "../domain/company.entity";
 
 @Controller('company')
 // @UseGuards(AuthGuard, RoleGuard)
-// @Roles(AdminRoleType.MASTER)
+// @Roles(AdminType.MASTER)
 export class CompanyLeaveController {
     constructor(
         private readonly companyLeaveService: CompanyLeaveService

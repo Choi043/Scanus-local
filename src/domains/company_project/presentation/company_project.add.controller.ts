@@ -2,7 +2,7 @@ import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
 import { Roles } from "src/commons/role/role.decorator";
 import { RoleGuard } from "src/commons/role/role.guard";
-import { AdminRoleType } from "src/domains/admin/domain/admin.role";
+import { AdminType } from "src/domains/admin/domain/admin.role";
 import { CompanyProjectAddService } from "../application/company_project.add.service";
 import { CompanyProjectInfoDto } from "../application/dto/company_project.info";
 
@@ -14,7 +14,7 @@ export class CompanyProjectAddController {
 
     // @Post('/register')
     // @UseGuards(JwtAuthGuard, RoleGuard)
-    // @Roles(AdminRoleType.MASTER)
+    // @Roles(AdminType.MASTER)
     // async registerCompany(@Body() companyProjectInfoDto: CompanyProjectInfoDto): Promise<any> {
     //     return await this.companyProjectAddService.register(companyRegisterDto);
     // }

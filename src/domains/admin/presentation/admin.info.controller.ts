@@ -7,7 +7,7 @@ import { Roles } from "src/commons/role/role.decorator";
 import { RoleGuard } from "src/commons/role/role.guard";
 import { AdminInfoService } from "../application/admin.info.service";
 import { AdminEntity } from "../domain/admin.entity";
-import { AdminRoleType } from "../domain/admin.role";
+import { AdminType } from "../domain/admin.role";
 
 @Controller('admin')
 export class AdminInfoController {
@@ -22,7 +22,7 @@ export class AdminInfoController {
 
     @Get('/info/:index')
     @UseGuards(JwtAuthGuard, RoleGuard)
-    @Roles(AdminRoleType.MASTER)
+    @Roles(AdminType.MASTER)
     async getAdminInfo(@Param('index') index: number) {
         return this.adminInfoService.getAdminInfo(index);
     }
@@ -38,7 +38,7 @@ export class AdminInfoController {
 
     @Get('/list')
     @UseGuards(JwtAuthGuard, RoleGuard)
-    @Roles(AdminRoleType.MASTER)
+    @Roles(AdminType.MASTER)
     async getAdminList(
         @CurrentRequest() req: Request) {
             let condition: string

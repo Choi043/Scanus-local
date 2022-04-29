@@ -1,6 +1,7 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { CompanyEntity } from "src/domains/company/domain/company.entity";
-import { AdminRoleType } from "../../domain/admin.role";
+import { AdminType } from "../../domain/admin.role";
+import { ConState } from "../../domain/admin.state";
 
 export class AdminSignUpDto {
     companyEntity: CompanyEntity
@@ -14,18 +15,26 @@ export class AdminSignUpDto {
     admin_pw: string;
     
     @IsString()
-    @IsNotEmpty({ message: '담당자를 입력해주세요.'})
+    @IsOptional()
     mn_nm: string;
     
     @IsString()
-    @IsNotEmpty({ message: '전화번호를 입력해주세요.'})
+    @IsOptional()
     mn_tel: string;
     
     @IsString()
-    @IsNotEmpty({ message: '이메일을 입력해주세요.'})
+    @IsOptional()
     mn_email: string;
 
     @IsString()
     @IsNotEmpty({ message: '관리자 타입을 입력해주세요.'})
-    admin_type: AdminRoleType;
+    admin_type: AdminType;
+
+    con_state: ConState;
+    
+    @IsOptional()
+    con_text: string;
+
+    @IsOptional()
+    pw_count: number; 
 }

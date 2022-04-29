@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString } from "class-validator";
-import { AdminRoleType } from "../../domain/admin.role";
+import { AdminType } from "../../domain/admin.role";
 
 export class AdminSignInDto {
     @IsString()
@@ -10,5 +10,5 @@ export class AdminSignInDto {
     @IsNotEmpty({ message: '비밀번호를 입력해주세요.'})
     admin_pw: string;
 
-    admin_type?: AdminRoleType;
+    admin_type?: AdminType;
 }

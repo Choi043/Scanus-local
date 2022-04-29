@@ -1,5 +1,5 @@
 import { SetMetadata } from "@nestjs/common";
-import { AdminRoleType } from "src/domains/admin/domain/admin.role";
+import { AdminType } from "src/domains/admin/domain/admin.role";
 
-export const Roles = (...roles: AdminRoleType[]): any =>
+export const Roles = (...roles: AdminType[]): any =>
     SetMetadata('roles', roles);
