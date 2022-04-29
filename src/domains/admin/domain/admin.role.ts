@@ -1,4 +1,4 @@
 export enum AdminRoleType {
-    MASTER = 'MASTER',
-    ADMIN = 'ADMIN',
+    MASTER = 'M',
+    ADMIN = 'A',
 }
