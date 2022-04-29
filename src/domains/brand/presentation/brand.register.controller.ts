@@ -10,7 +10,7 @@ export class BrandRegisterController {
     
     @Post('/register')
     // @UseGuards(JwtAuthGuard, RoleGuard)
-    // @Roles(AdminRoleType.MASTER)
+    // @Roles(AdminType.MASTER)
     async registerCompany(@Body() brandRegisterDto: BrandRegisterDto): Promise<any> {
         return await this.brandRegisterService.register(brandRegisterDto);
     }

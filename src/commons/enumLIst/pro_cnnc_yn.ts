@@ -3,3 +3,8 @@ export enum Pro_cnnc_yn {
     Type_Y = 'Y',
     Type_N = 'N',
 }
+
+export enum Pro_cnnc_yn_QR {
+    Type_Y = 'Y',
+    Type_N = 'N',
+}
