@@ -24,28 +24,28 @@ export class AdminSignInService {
         accessToken: string
         refreshToken: string
     }> {
-        const { admin_id, admin_pw } = adminSignInDto;
-        const adminFind: AdminEntity = await this.adminFindService.findById(admin_id);
+        const { admin_id, admin_pw } = adminSignInDto;      // adminSignInDto에서 id, pw 입력 값 할당
+        const adminFind: AdminEntity = await this.adminFindService.findById(admin_id);      // 데이터베이스에서 admin_id에 대한 값이 있는지 찾고 있다면 adminFind에 할당
 
-        const { admin_idx } = adminFind;
+        const { admin_idx } = adminFind;        // 위 findById로 할당 받은 로그인하려는 계정의 pk값(admin_idx)
 
-        await this.comparePassword(admin_pw, adminFind)
+        await this.comparePassword(admin_pw, adminFind)     // 비밀번호 검증 함수, 5회 검증
 
-        const accessToken = await this.authService.createAccessToken({
+        const accessToken = await this.authService.createAccessToken({      // accessToken에 payload 값으로 할당할 admin_idx와 admin 계정 등급
             index: admin_idx,
             role: adminFind.admin_type,
         });
-        const refreshToken = await this.authService.createRefreshToken({
+        const refreshToken = await this.authService.createRefreshToken({        // refreshToken에 payload 값으로 할당할 admin_idx와 admin 계정 등급
             index: admin_idx,
             role: adminFind.admin_type,
         });
 
-        await this.authService.setRefreshToken(adminFind, refreshToken)
+        await this.authService.setRefreshToken(adminFind, refreshToken)         // tb_admin_token에 refreshToken 새 값으로 수정(없다면 insert)
 
-        this.authSessionService.addSession(admin_idx, accessToken, refreshToken);
-        this.authSessionService.printSession()
+        this.authSessionService.addSession(admin_idx, accessToken, refreshToken);       // session 배열에 admin_idx, accessToken, refreshToken 값 push
+        this.authSessionService.printSession()      // 현재 세션에 대한 정보 콘솔에 출력
 
-        const adminSignInResponse = AdminSignInResponse.of(adminFind);
+        const adminSignInResponse = AdminSignInResponse.of(adminFind);      // 출력(반환) 형식 지정 : ( admin_idx, mn_nm, mn_email, admin_type )
 
         return { adminSignInResponse, accessToken, refreshToken }
     }
