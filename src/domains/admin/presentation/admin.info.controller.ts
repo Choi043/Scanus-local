@@ -1,3 +1,4 @@
+import { AdminFindService } from 'src/domains/admin/application/admin.find.service';
 import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
 import { Request } from "express";
 import { CurrentRequest } from "src/commons/decorator/decorator.current.req";
@@ -11,20 +12,23 @@ import { AdminType } from "../domain/admin.role";
 
 @Controller('admin')
 export class AdminInfoController {
-    constructor(private readonly adminInfoService: AdminInfoService) { }
+    constructor(
+        private readonly adminInfoService: AdminInfoService,
+        private readonly adminFindService: AdminFindService,
+        ) { }
 
     @Get('/info')
     @UseGuards(JwtAuthGuard)
     async getInfo(@CurrentUser() user: AdminEntity) {
         const { admin_idx } = user;
-        return this.adminInfoService.getAdminInfo(admin_idx);
+        return this.adminFindService.findByIndex(admin_idx);
     }
 
     @Get('/info/:index')
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Roles(AdminType.MASTER)
     async getAdminInfo(@Param('index') index: number) {
-        return this.adminInfoService.getAdminInfo(index);
+        return this.adminFindService.findByIndex(index);
     }
 
     @Get('/infolist')

@@ -47,16 +47,16 @@ export class AdminInfoService {
             .getManyAndCount()
     }
 
-    async getAdminInfo(admin_idx: number) {
-        const adminFind = await this.adminRepository.findOne({
-            where: { admin_idx },
-            // relations: ['']
-        })
+    // async getAdminInfo(admin_idx: number) {
+    //     const adminFind = await this.adminRepository.findOne({
+    //         where: { admin_idx },
+    //         // relations: ['']
+    //     })
 
-        if (!adminFind) {
-            throw new BadRequestException('데이터가 존재하지 않습니다.');
-        }
+    //     if (!adminFind) {
+    //         throw new BadRequestException('데이터가 존재하지 않습니다.');
+    //     }
 
-        return adminFind;
-    }
+    //     return adminFind;
+    // }
 }
