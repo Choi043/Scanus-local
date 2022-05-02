@@ -16,7 +16,9 @@ import { QRStateChangeController } from "./presentation/qr.state-change.controll
     imports: [
         TypeOrmModule.forFeature([QRRepository])
     ],
-    exports: [],
+    exports: [
+        QRIssInfoService,
+    ],
     controllers: [
         QRIssRequestController,
         QRReqestUpdateController,

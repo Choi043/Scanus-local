@@ -39,15 +39,25 @@ export class ProjectInfoService {
             .orderBy('tb_project.reg_dt', 'ASC')
             .getManyAndCount()
     }
+
+
+    /**
+     * 
+     * @param condition 
+     * 
+     * prjct_idx 4 => cmpny name, prj_dt ,    tb_cmpny_prjct
+     * 
+     */
+
     
     // 회사명 - 프로젝트명 - 일련번호 ~ 블록체인사용여부 - 등록일
     async infoChannel(condition: string, find: string) {
         console.log("Check")
         return await this.projectRepository
-            .createQueryBuilder('tb_company_project')
+            .createQueryBuilder('tb_project')
             .select([
-                // 'tb_company.cmpny_nm',
-                // 'tb_company_project.prjct_idx',
+                'tb_company.cmpny_nm',
+                'tb_company_project.cmpny_idx',
                 // 'tb_company_project',
                 'tb_project.prjct_nm',
                 'tb_project.sn_yn',
@@ -59,9 +69,9 @@ export class ProjectInfoService {
                 'tb_project.blockchain_yn',
                 // 'tb_project.reg_dt',
             ])
-            .leftJoin('tb_company_project.prjct_idx', 'tb_project')
-            // .leftJoin('tb_company_project.cmpny_idx', 'tb_company.company_project')
-            .where(`tb_project.${condition} LIKE "${find}%"`)
+            .innerJoin('tb_project.company_project', 'tb_company_project')
+            .innerJoin('tb_company_project.cmpny_idx', 'tb_company')
+            .where(`tb_project.${condition} LIKE '${find}%'`)
             .orderBy('tb_project.reg_dt', 'ASC')
             .getManyAndCount()
     }

@@ -1,5 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { QRIssInfoService } from "../qr-master/application/qr.iss-info.service";
+import { QRRepository } from "../qr-master/domain/qr.repository";
 import { ProjectDeleteService } from "./application/project.delete.service";
 import { ProjectEditService } from "./application/project.edit.service";
 import { ProjectInfoService } from "./application/project.info.service";
@@ -12,7 +14,7 @@ import { ProjectRegisterController } from "./presentation/project.register.contr
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([ProjectRepository])
+        TypeOrmModule.forFeature([ProjectRepository, QRRepository])
     ],
     exports: [],
     controllers: [
@@ -26,6 +28,7 @@ import { ProjectRegisterController } from "./presentation/project.register.contr
         ProjectEditService,
         ProjectInfoService,
         ProjectDeleteService,
+        QRIssInfoService,
     ],
 })
 export class ProjectModule {}
