@@ -1,7 +1,7 @@
 import { AdminFindService } from 'src/domains/admin/application/admin.find.service';
 import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
 import { Request } from "express";
-import { CurrentRequest } from "src/commons/decorator/decorator.current.req";
+import { CurrentChannel } from "src/commons/decorator/decorator.current.req";
 import { CurrentUser } from "src/commons/decorator/decorator.current.user";
 import { JwtAuthGuard, RefreshGuard } from "src/commons/jwt/jwt.auth.guard";
 import { Roles } from "src/commons/role/role.decorator";
@@ -44,7 +44,7 @@ export class AdminInfoController {
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Roles(AdminType.MASTER)
     async getAdminList(
-        @CurrentRequest() req: Request) {
+        @CurrentChannel() req: Request) {
             let condition: string
             let find: string
             if( req === undefined ) {

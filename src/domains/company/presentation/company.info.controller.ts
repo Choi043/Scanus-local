@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
-import { CurrentRequest } from "src/commons/decorator/decorator.current.req";
+import { CurrentChannel } from "src/commons/decorator/decorator.current.req";
 import { CurrentUser } from "src/commons/decorator/decorator.current.user";
 import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
 import { CompanyInfoService } from "../application/company.info.service";
@@ -20,6 +20,6 @@ export class CompanyInfoController {
     // @Post('/list')
     // @UseGuards(JwtAuthGuard)
     // async companyList(
-    //     @CurrentRequest: 
+    //     @CurrentChannel: 
     // )
 }

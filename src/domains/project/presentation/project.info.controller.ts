@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query, Req, UseGuards } from "@nestjs/common";
 import { Request } from "express";
-import { CurrentRequest } from "src/commons/decorator/decorator.current.req";
+import { CurrentChannel } from "src/commons/decorator/decorator.current.req";
 import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
 import { ProjectInfoService } from "../application/project.info.service";
 
@@ -25,7 +25,7 @@ export class ProjectInfoController {
     @Get('/list')
     @UseGuards(JwtAuthGuard)
     async getProjectList(
-        @CurrentRequest() req: Request
+        @CurrentChannel() req: Request
         ) {
             let condition: string
             let find: string
