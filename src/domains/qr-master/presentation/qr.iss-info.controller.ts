@@ -32,7 +32,7 @@ export class QrIssInfoController {
                 find = ''
             } else {
                 condition = req[0]
-                find = String(req[1])
+                find = req[1]
             }
             return await this.qrIssInfoService.infoChannel( condition, find );
         }

@@ -1,5 +1,5 @@
 import { AdminFindService } from 'src/domains/admin/application/admin.find.service';
-import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
+import { Controller, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
 import { Request } from "express";
 import { CurrentChannel } from "src/commons/decorator/decorator.current.req";
 import { CurrentUser } from "src/commons/decorator/decorator.current.user";
@@ -40,19 +40,19 @@ export class AdminInfoController {
         return this.adminInfoService.list({ take, page });
     }
 
-    @Get('/list')
-    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Post('/list')
+    @UseGuards(RefreshGuard, RoleGuard)
     @Roles(AdminType.MASTER)
     async getAdminList(
-        @CurrentChannel() req: Request) {
+        @CurrentChannel() req: Request) {       // req.body[0] ~ [1] 형식 req[0] ~ [1]로 대체하기 위한 데코레이터
             let condition: string
             let find: string
-            if( req === undefined ) {
+            if( req === undefined ) {       // 입력 값이 없을 시(초기화 형식)
                 condition = 'admin_idx'
                 find = ''
             } else {
-                condition = req[0]
-                find = String(req[1])
+                condition = req[0]      // 조회 조건
+                find = req[1]           // 입력 값
             }
             return await this.adminInfoService.infoChannel( condition, find );
         }

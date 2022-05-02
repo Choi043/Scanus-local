@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString } from "class-validator";
 import { AdminTokenEntity } from "src/domains/auth/domain/admin.token.entity";
 import { CompanyEntity } from "src/domains/company/domain/company.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { AdminType } from "./admin.role";
 import { ConState } from "./admin.state";
 
@@ -12,7 +12,10 @@ export class AdminEntity{
     admin_idx: number;    
 
     // ManyToOne : 
-    @ManyToOne(() => CompanyEntity)
+    @ManyToOne(
+        () => CompanyEntity,
+        // (company) => company.cmpny_idx
+        )
     @JoinColumn({ name: 'cmpny_idx'})
     companyEntity: CompanyEntity
 

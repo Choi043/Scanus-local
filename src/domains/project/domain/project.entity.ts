@@ -8,6 +8,7 @@ import { Unit_yn } from "src/commons/enumLIst/unit_yn";
 import { Use_yn } from "src/commons/enumLIst/use_yn";
 import { DateIdxEntity } from "src/commons/extends-entity/date-idx.entity";
 import { CompanyProjectEntity } from "src/domains/company_project/domain/company_project.entity";
+import { QREntity } from "src/domains/qr-master/domain/qr.entity";
 import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tb_project')
@@ -90,13 +91,15 @@ export class ProjectEntity extends DateIdxEntity{
     })
     use_yn: Use_yn
     
-    // @ManyToOne(() => CompanyEntity)
-    // @JoinColumn({ name: 'cmpny_idx'})
-    // companyEntity: CompanyEntity
+    @OneToMany(
+        () => QREntity, 
+        (qrEntity) => qrEntity.projectEntity
+        )
+    qrEntity: QREntity
     
     @OneToMany(
         () => CompanyProjectEntity,
-        (companyProjectEntity) => companyProjectEntity.prjct_idx
+        (companyProjectEntity) => companyProjectEntity.prjct_idx//, { createForeignKeyConstraints : false }
         )
     company_project: CompanyProjectEntity;
 }

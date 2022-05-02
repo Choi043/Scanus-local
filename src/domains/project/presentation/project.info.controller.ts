@@ -34,7 +34,7 @@ export class ProjectInfoController {
                 find = ''
             } else {
                 condition = req[0]
-                find = String(req[1])
+                find = req[1]
             }
             return await this.projectInfoService.infoChannel( condition, find );
         }

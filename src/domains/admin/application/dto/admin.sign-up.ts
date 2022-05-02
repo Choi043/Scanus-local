@@ -4,7 +4,8 @@ import { AdminType } from "../../domain/admin.role";
 import { ConState } from "../../domain/admin.state";
 
 export class AdminSignUpDto {
-    companyEntity: CompanyEntity
+    @IsOptional()
+    cmpny_idx?: CompanyEntity
     
     @IsString()
     @IsNotEmpty({ message: '아이디를 입력해주세요.'})
@@ -27,8 +28,9 @@ export class AdminSignUpDto {
     mn_email: string;
 
     @IsString()
-    @IsNotEmpty({ message: '관리자 타입을 입력해주세요.'})
-    admin_type: AdminType;
+    @IsOptional()
+    // @IsNotEmpty({ message: '관리자 타입을 입력해주세요.'})
+    admin_type?: AdminType;
 
     con_state: ConState;
     

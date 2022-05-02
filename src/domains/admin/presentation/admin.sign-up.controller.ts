@@ -11,8 +11,8 @@ export class AdminSignUpController {
     constructor(private readonly adminSignUpService: AdminSignUpService) {}
 
     @Post('/register')
-    // @UseGuards(JwtAuthGuard, RoleGuard)
-    // @Roles(AdminType.MASTER)
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles(AdminType.MASTER)
     async registerAdmin(@Body() adminSignUpDto: AdminSignUpDto): Promise<any> {
         return await this.adminSignUpService.signUp(adminSignUpDto);
     }
