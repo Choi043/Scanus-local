@@ -13,11 +13,11 @@ export class AdminFindService {
     ) { }
 
     async findById(admin_id: string): Promise<AdminEntity> {
-        const adminFind = await this.adminRepository.findOne({
-            where: { admin_id },
+        const adminFind = await this.adminRepository.findOne({      // Repository.findOne 함수() - 주어진 값(entity)에 일치하는 첫 번째 엔티티를 찾음
+            where: { admin_id },        // -> where admin_id = admin_id(변수 값)
         });
 
-        if (!adminFind) {
+        if (!adminFind) {               // adminFind에 해당하는 엔티티가 없어 undefined일 경우
             throw new BadRequestException('계정 정보가 존재하지 않습니다.');
         }
 
@@ -26,7 +26,7 @@ export class AdminFindService {
 
     async findByIndex(admin_idx: number): Promise<AdminEntity> {
         const adminFind = await this.adminRepository.findOne({
-            where: { admin_idx },
+            where: { admin_idx },       // -> where admin_idx = admin_idx(변수 값: pk값으로 참조)
         });
 
         if (!adminFind) {
@@ -36,7 +36,7 @@ export class AdminFindService {
         return adminFind;
     }
 
-    async findByFields(options: FindOneOptions<AdminEntity>): Promise<AdminEntity> {
+    async findByFields(options: FindOneOptions<AdminEntity>): Promise<AdminEntity> {        // id, index가 아닌 다른 값으로 entity를 찾으려 할 때,
         const fieldFind = await this.adminRepository.findOne(options);
 
         if (!fieldFind) {

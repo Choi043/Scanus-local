@@ -11,6 +11,6 @@ export class AdminSignUpService {
     ) {}
 
     async signUp(adminSignUpDto: AdminSignUpDto): Promise<AdminSignUpDto> {
-        return await this.adminRepository.createAdmin(adminSignUpDto);
+        return await this.adminRepository.createAdmin(adminSignUpDto);      // DB에 직접 insert하는 경우 repository에서 처리
     }
 }

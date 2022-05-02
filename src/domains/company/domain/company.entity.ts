@@ -34,7 +34,7 @@ export class CompanyEntity extends DateIdxEntity {
 
     @OneToMany(
         () => CompanyProjectEntity,
-        (companyProjectEntity) => companyProjectEntity.cmpny_idx
+        (companyProjectEntity) => companyProjectEntity.cmpny_idx//, { createForeignKeyConstraints: false }
     )
     company_project: CompanyProjectEntity;
 }

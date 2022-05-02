@@ -43,7 +43,7 @@ export class AdminSignInService {
         await this.authService.setRefreshToken(adminFind, refreshToken)         // tb_admin_token에 refreshToken 새 값으로 수정(없다면 insert)
 
         this.authSessionService.addSession(admin_idx, accessToken, refreshToken);       // session 배열에 admin_idx, accessToken, refreshToken 값 push
-        this.authSessionService.printSession()      // 현재 세션에 대한 정보 콘솔에 출력
+        // this.authSessionService.printSession()      // 현재 세션에 대한 정보 콘솔에 출력
 
         const adminSignInResponse = AdminSignInResponse.of(adminFind);      // 출력(반환) 형식 지정 : ( admin_idx, mn_nm, mn_email, admin_type )
 
@@ -84,7 +84,7 @@ export class AdminSignInService {
         
         // 입력된 password(compare에서 bcrypt 처리)와 DB에 저장된 compareAdmin.admin_pw 를 비교하여 두 값이 일치하다면 true, 틀리면 false를 반환
         const hashPassword = await bcrypt.compare(password, compareAdmin.admin_pw)
-        // hash된 값이 틀린 경우 false이지만 !식별자를 통해 not false -> true
+        // hash된 값이 틀린 경우 false이지만 !식별자로 if 조건절에서 틀린 경우 처리
         if (!hashPassword) {
             compareAdmin.pw_count += 1;     // 기존에 가져왔던 계정의 DB값 pw_count에 +1을 해서 오류 횟수 증가
             await this.adminRepository.save(compareAdmin);  // DB에 변경된 값 저장

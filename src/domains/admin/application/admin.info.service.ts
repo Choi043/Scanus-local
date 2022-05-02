@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Controller, Injectable, Post } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { JwtPayload } from "src/commons/jwt/jwt.payload";
 import { PaginationOptions } from "src/commons/typeorm/paginate/pagination.option";
@@ -35,28 +35,15 @@ export class AdminInfoService {
         return await this.adminRepository
             .createQueryBuilder('tb_admin')
             .select([
-                'tb_company.cmpny_nm',
-                'tb_company.cmpny_cd',
+                'tb_company.cmpny_nm',      // cmpny_idx 참조하여 tb_company.cmpny_nm 값 select
+                'tb_company.cmpny_cd',      // cmpny_idx 참조하여 tb_company.cmpny_cd 값 select
                 'tb_admin.mn_nm',
                 'tb_admin.mn_email',
                 'tb_admin.reg_dt',
             ])
-            .innerJoin('tb_admin.companyEntity', 'tb_company')
-            .where(`tb_admin.${condition} LIKE "${find}%"`)
+            .innerJoin('tb_admin.companyEntity', 'tb_company')  // AdminEntity에서 조인 관계 설정한 companyEntity와 tb_company에 대해서 innerJoin
+            .where(`tb_admin.${condition} LIKE "${find}%"`)     // 파라미터로 받은 condition(조건 조회 키)와 find(조건 입력 값)로 결과 값 조정
             .orderBy('tb_admin.reg_dt', 'ASC')
             .getManyAndCount()
     }
-
-    // async getAdminInfo(admin_idx: number) {
-    //     const adminFind = await this.adminRepository.findOne({
-    //         where: { admin_idx },
-    //         // relations: ['']
-    //     })
-
-    //     if (!adminFind) {
-    //         throw new BadRequestException('데이터가 존재하지 않습니다.');
-    //     }
-
-    //     return adminFind;
-    // }
 }
