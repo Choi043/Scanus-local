@@ -3,7 +3,7 @@ import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
 import { Request } from "express";
 import { CurrentRequest } from "src/commons/decorator/decorator.current.req";
 import { CurrentUser } from "src/commons/decorator/decorator.current.user";
-import { JwtAuthGuard } from "src/commons/jwt/jwt.auth.guard";
+import { JwtAuthGuard, RefreshGuard } from "src/commons/jwt/jwt.auth.guard";
 import { Roles } from "src/commons/role/role.decorator";
 import { RoleGuard } from "src/commons/role/role.guard";
 import { AdminInfoService } from "../application/admin.info.service";
@@ -18,7 +18,7 @@ export class AdminInfoController {
         ) { }
 
     @Get('/info')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(RefreshGuard)
     async getInfo(@CurrentUser() user: AdminEntity) {
         const { admin_idx } = user;
         return this.adminFindService.findByIndex(admin_idx);

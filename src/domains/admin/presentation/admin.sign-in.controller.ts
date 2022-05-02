@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post, Res, UseGuards } from "@nestjs/common";
-import { response } from "express";
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { Request, Response, response } from "express";
 import { CurrentUser } from "src/commons/decorator/decorator.current.user";
-import { RefreshGuard } from "src/commons/jwt/jwt.auth.guard";
+import { JwtAuthGuard, RefreshGuard } from "src/commons/jwt/jwt.auth.guard";
 import { AuthSessionService } from "src/domains/auth/application/auth.session.service";
 import { AdminInfoService } from "../application/admin.info.service";
 import { AdminSignInService } from "../application/admin.sign-in.service";
@@ -20,25 +20,33 @@ export class AdminSignInController {
     @Post('/sign-in')
     async signIn(
         @Body() adminSignInDto: AdminSignInDto,
-        // @Res() response
-    ): Promise<{ accessToken: string }> {
+        @Res() response: Response
+    ):
+        // Promise<{ accessToken: string }> 
+        Promise<any> {
         const { adminSignInResponse, accessToken, refreshToken } =
             await this.adminSignInService.signIn(adminSignInDto);
 
-        // response.cookie(REFRESH_TOKEN, refreshToken, {
-        //     httpOnly: true,
-        //     secure: true,
-        // })
+        response.cookie(REFRESH_TOKEN, refreshToken, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            // secure: true,
+        })
 
-        // console.log('response: ', response);
-        // console.log("Test")
-        // this.authSessionService.printSession();
-
-        return { ...adminSignInResponse, accessToken }
+        return response.send({ ...adminSignInResponse, accessToken, refreshToken })
+        // return { ...adminSignInResponse, accessToken, refreshToken }
     }
 
+    @Get('/cookies')
+    getCookies(@Req() req: Request, @Res() res: Response): any {
+        const jwt = req.cookies[REFRESH_TOKEN]
+        return res.send(jwt);
+    }
+
+
+
     @Get('/refresh')
-    // @UseGuards(RefreshGuard)
+    @UseGuards(RefreshGuard)
     async refreshToken(
         @CurrentUser() user: AdminEntity,
         @Res() response

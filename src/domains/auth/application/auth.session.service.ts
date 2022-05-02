@@ -49,7 +49,7 @@ export class AuthSessionService {
     validateRefreshToken(admin_idx: number, refreshToken: string) {
         const index = this.jwtSessions.findIndex(
             (jwtSession) => jwtSession.admin_idx === admin_idx,
-        );
+            );
 
         return index !== -1 && this.jwtSessions[index].refreshToken === refreshToken;
     }
