@@ -9,11 +9,11 @@ export class AdminSignOutService {
         private readonly adminFindService: AdminFindService,
         private readonly authService: AuthTokenService,
         private readonly authSessionService: AuthSessionService,
-    ) {}
+    ) { }
 
     public async signOut(refreshToken: string): Promise<void> {
         let payload: any;
-        if( refreshToken) {
+        if (refreshToken) {
             try {
                 payload = await this.authService.verifyRefreshToken(refreshToken)
             } catch (exception) {
@@ -23,7 +23,9 @@ export class AdminSignOutService {
             const admin_idx = payload.index;
             const user = await this.adminFindService.findByIndex(admin_idx);
 
-            if (this.authSessionService.validateRefreshToken(admin_idx, refreshToken)) {
+            if (
+                this.authSessionService.validateRefreshToken(admin_idx, refreshToken)
+            ) {
                 this.authSessionService.removeSession(admin_idx);
                 await this.authService.deleteRefreshToken(user);
                 this.authSessionService.printSession();
