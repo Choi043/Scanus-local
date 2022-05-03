@@ -40,6 +40,8 @@ export class AdminInfoService {
                 'tb_admin.mn_nm',
                 'tb_admin.mn_email',
                 'tb_admin.reg_dt',
+                'tb_admin.admin_type',
+                'tb_admin.con_state',
             ])
             .innerJoin('tb_admin.companyEntity', 'tb_company')  // AdminEntity에서 조인 관계 설정한 companyEntity와 tb_company에 대해서 innerJoin
             .where(`tb_admin.${condition} LIKE "${find}%"`)     // 파라미터로 받은 condition(조건 조회 키)와 find(조건 입력 값)로 결과 값 조정
