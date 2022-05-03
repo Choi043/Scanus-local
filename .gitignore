@@ -3,9 +3,9 @@
 /node_modules
 
 # yaml environment variable files
-config/default.yaml
-config/dev.yaml
-config/prod.yaml
+config/default.yml
+config/dev.yml
+config/prod.yml
 
 # dotenv environment variable filwes
 .env

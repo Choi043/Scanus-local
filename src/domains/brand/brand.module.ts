@@ -1,5 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ProductInfoService } from "../product/application/product.info.service";
+import { ProductRepository } from "../product/domain/product.repository";
 import { BrandDeleteService } from "./application/brand.delete.service";
 import { BrandEditService } from "./application/brand.edit.Service";
 import { BrandInfoService } from "./application/brand.info.service";
@@ -12,7 +14,7 @@ import { BrandRegisterController } from "./presentation/brand.register.controlle
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([BrandRepository])
+        TypeOrmModule.forFeature([BrandRepository, ProductRepository])
     ],
     exports: [],
     controllers: [
@@ -26,6 +28,7 @@ import { BrandRegisterController } from "./presentation/brand.register.controlle
         BrandEditService,
         BrandInfoService,
         BrandDeleteService,
+        ProductInfoService,
     ],
 })
 export class BrandModule {}
