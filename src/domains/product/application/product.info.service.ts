@@ -7,12 +7,19 @@ export class ProductInfoService {
     constructor(
         @InjectRepository(ProductRepository)
         private readonly ProductRepository: ProductRepository
-    ) {}
-    
-    async getProductInfo(product_idx: number) {
+    ) { }
+
+    async getProductInfo(product_idx: number, brand_idx?: number) {
         const productFind = await this.ProductRepository.findOne({
             where: { pro_idx: product_idx },
         })
+
+        if (brand_idx) {
+            const brandFind = await this.ProductRepository.find({
+                where: { brandEntity: brand_idx },
+            })
+            return brandFind;
+        }
 
         if (!productFind) {
             throw new BadRequestException('데이터가 존재하지 않습니다.');
@@ -20,7 +27,7 @@ export class ProductInfoService {
         return productFind;
     }
 
-    async list() {        
+    async list() {
         return await this.ProductRepository
             .createQueryBuilder('tb_product')
             .select([

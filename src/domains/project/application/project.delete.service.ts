@@ -24,7 +24,7 @@ export class ProjectDeleteService {
         const checkProject =  findToProject[1];        
 
         if (findProject && !checkProject){
-            // await this.projectRepository.delete(prjct_idx)
+            await this.projectRepository.delete(prjct_idx)
             
             return {
                 message: "삭제 완료"

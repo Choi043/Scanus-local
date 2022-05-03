@@ -14,7 +14,9 @@ import { ProductRegisterController } from "./presentation/product.register.contr
     imports: [
         TypeOrmModule.forFeature([ProductRepository])
     ],
-    exports: [],
+    exports: [
+        ProductInfoService
+    ],
     controllers: [
         ProductRegisterController,
         ProductInfoController,

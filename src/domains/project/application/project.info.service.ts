@@ -52,7 +52,8 @@ export class ProjectInfoService {
     
     // 회사명 - 프로젝트명 - 일련번호 ~ 블록체인사용여부 - 등록일
     async infoChannel(condition: string, find: string) {
-        console.log("Check")
+        const whereQuery = this.checkChannel(condition, find)
+        
         return await this.projectRepository
             .createQueryBuilder('tb_project')
             .select([
@@ -67,12 +68,29 @@ export class ProjectInfoService {
                 'tb_project.scratch_type',
                 'tb_project.surl_yn',
                 'tb_project.blockchain_yn',
-                // 'tb_project.reg_dt',
+                'tb_project.use_yn',
+                'tb_project.reg_dt',
             ])
             .innerJoin('tb_project.company_project', 'tb_company_project')
             .innerJoin('tb_company_project.cmpny_idx', 'tb_company')
-            .where(`tb_project.${condition} LIKE '${find}%'`)
+            .where(whereQuery)
             .orderBy('tb_project.reg_dt', 'ASC')
             .getManyAndCount()
+    }
+
+    public checkChannel(condition: string, find: string) {
+        let query: string;
+        if (condition === 'cmpny_nm') {
+            query = `tb_company.${condition} LIKE "%${find}%"`;
+        } else if (condition === 'prjct_nm') {
+            query = `tb_project.${condition} LIKE "%${find}%"`;
+        } else if (condition === 'reg_dt') {
+            query = `tb_project.${condition} LIKE "%${find}%"`;
+        } else if (condition === 'use_yn') {
+            query = `tb_project.${condition} LIKE "%${find}%"`;;
+        } else {
+            throw new BadRequestException("잘못된 값을 입력하셨습니다.")
+        }
+        return query
     }
 }

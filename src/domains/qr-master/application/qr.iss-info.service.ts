@@ -68,16 +68,13 @@ export class QRIssInfoService {
         let query: string;
         if (condition === 'cmpny_nm' || condition === 'cmpny_cd') {
             query = `tb_company.${condition} LIKE "${find}%"`;
-        }
-        else if (condition === 'prjct_nm') {
+        } else if (condition === 'prjct_nm') {
             query = `tb_project.${condition} LIKE "${find}%"`;
-        }
-        else if (condition === 'reg_dt') {
+        } else if (condition === 'reg_dt') {
             query = `tb_qr.${condition} LIKE "${find}%"`;
         } else if (condition === 'qr_idx') {
-            return;
-        }
-        else {
+            query = `tb_qr.${condition} LIKE "${find}%"`;
+        } else {
             throw new BadRequestException("잘못된 값을 입력하셨습니다.")
         }
         return query
