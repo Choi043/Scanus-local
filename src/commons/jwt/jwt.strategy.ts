@@ -37,6 +37,7 @@ export class JwtAccessStrategy extends PassportStrategy(
         if (!user) {
             return new UnauthorizedException('계정이 존재하지 않습니다.');
         }
+        // 세션에 값(accessToken)이 이미 존재하는지
         // if (!this.authSessionService.validateAccessToken(user.admin_idx, accessToken)) {
         //     throw new ConflictException('다른 기기에서 로그인 되었습니다.');
         // }
