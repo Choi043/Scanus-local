@@ -26,11 +26,15 @@ export class AdminFindService {
 
     async findByIndex(admin_idx: number): Promise<AdminEntity> {
         const adminFind = await this.adminRepository.findOne({
-            where: { admin_idx },       // -> where admin_idx = admin_idx(변수 값: pk값으로 참조)
+            where: { admin_idx },       // where admin_idx = 매개변수 admin_idx(변수 값: pk값으로 참조)
         });
 
-        if (!adminFind) {
+        if (!adminFind) {               // adminFind에 해당하는 엔티티가 없어 undefined일 경우
             throw new BadRequestException('계정 정보가 존재하지 않습니다.');
+        }
+
+        if (adminFind.pw_count >= 5) {  // adminFind에 pw_count가 5회 이상 비밀번호를 틀렸을 시
+            throw new BadRequestException('비밀번호 입력 시도 횟수를 넘었습니다. 관리자에게 문의바랍니다.');
         }
 
         return adminFind;
