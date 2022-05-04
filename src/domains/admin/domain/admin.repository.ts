@@ -20,7 +20,7 @@ export class AdminRepository extends Repository<AdminEntity> {
             mn_nm,
             mn_tel,
             mn_email,
-            admin_type
+            admin_type,
         });
 
         return await this.save(adminAccount);   // DB에 adminaAccount 저장
