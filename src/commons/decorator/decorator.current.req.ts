@@ -6,10 +6,14 @@ export const CurrentChannel = createParamDecorator(
         const findCheck = Object.entries(request?.body)[0]
 
         if (findCheck){
-            return findCheck;
+          const condition = findCheck[0]
+          const find = findCheck[1]
+            return { condition, find };
         }
         else{
-            return undefined
+          const condition = '';
+          const find = '';
+            return { condition, find }
         }
         
     }
