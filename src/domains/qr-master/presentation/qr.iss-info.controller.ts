@@ -10,8 +10,8 @@ import { QRIssInfoService } from "../application/qr.iss-info.service";
 @Controller('qr')
 export class QrIssInfoController {
     constructor(
-        private readonly qrIssInfoService : QRIssInfoService
-    ){}
+        private readonly qrIssInfoService: QRIssInfoService
+    ) { }
 
     @Get('/info/:id')
     @UseGuards(JwtAuthGuard, RoleGuard)
@@ -24,16 +24,8 @@ export class QrIssInfoController {
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Roles(AdminType.MASTER)
     async getAdminList(
-        @CurrentChannel() req: Request) {
-            let condition: string
-            let find: string
-            if( req === undefined ) {
-                condition = 'qr_idx'
-                find = ''
-            } else {
-                condition = req[0]
-                find = req[1]
-            }
-            return await this.qrIssInfoService.infoChannel( condition, find );
-        }
+        @CurrentChannel() req: any) {
+        let { condition, find } = req;
+        return await this.qrIssInfoService.infoChannel(condition, find);
+    }
 }

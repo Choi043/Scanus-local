@@ -27,16 +27,8 @@ export class BrandInfoController {
     @UseGuards(RefreshGuard, RoleGuard)
     @Roles(AdminType.MASTER)
     async getAdminList(
-        @CurrentChannel() req: Request) {       // req.body[0] ~ [1] 형식 req[0] ~ [1]로 대체하기 위한 데코레이터
-        let condition: string
-        let find: string
-        if (req === undefined) {       // 입력 값이 없을 시(초기화 형식)
-            condition = 'brand_idx'
-            find = ''
-        } else {
-            condition = req[0]      // 조회 조건
-            find = req[1]           // 입력 값
-        }
+        @CurrentChannel() req: any) {
+            let { condition, find } = req;
         return await this.brandInfoService.infoChannel(condition, find);
     }
 }

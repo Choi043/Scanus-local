@@ -25,17 +25,8 @@ export class ProjectInfoController {
     @Get('/list')
     @UseGuards(JwtAuthGuard)
     async getProjectList(
-        @CurrentChannel() req: Request
-        ) {
-            let condition: string
-            let find: string
-            if( req === undefined ) {
-                condition = 'prjct_idx'
-                find = ''
-            } else {
-                condition = req[0]
-                find = req[1]
-            }
+        @CurrentChannel() req: any) {
+            let { condition, find } = req;
             return await this.projectInfoService.infoChannel( condition, find );
         }
 }
